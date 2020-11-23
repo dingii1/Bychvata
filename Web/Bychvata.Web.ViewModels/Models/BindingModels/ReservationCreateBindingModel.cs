@@ -1,0 +1,19 @@
+﻿using Bychvata.Data.Models;
+using System;
+using System.Collections.Generic;
+
+namespace Bychvata.Web.ViewModels.Models.BindingModels
+{
+    public class ReservationCreateBindingModel
+    {
+        public int? BungalowId { get; set; }
+
+        public DateTime Arrival { get; set; }
+
+        public DateTime Departure { get; set; }
+
+        public string Notes { get; set; }
+
+        public IEnumerable<Addition> Additions { get; set; }
+    }
+}

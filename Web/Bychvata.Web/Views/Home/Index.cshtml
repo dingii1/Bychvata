@@ -1,0 +1,39 @@
+﻿@using Bychvata.Common
+@using Bychvata.Web.ViewModels.Models.BindingModels
+@using Bychvata.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@model AvailabilityBindingModel
+@{
+    this.ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4 mb-5">Welcome to @GlobalConstants.SystemName!</h1>
+    <form method="post" class="mb-5">
+        <div asp-validation-summary="All"></div>
+        <div class="d-flex justify-content-around">
+            <div class="form-group mb-0">
+                <label asp-for="From">
+                    <span class="required" title="Пристигане">Пристигане:</span>
+                </label>
+                <input type="date" class="form-control" asp-for="From" value="" />
+                <span asp-validation-for="From"></span>
+            </div>
+            <div class="form-group mb-0">
+                <label asp-for="To">
+                    <span class="required" title="Заминаване">Заминаване:</span>
+                </label>
+                <input type="date" class="form-control mb-0" asp-for="To" value="" />
+                <span asp-validation-for="To"></span>
+            </div>
+            <div class="d-flex align-items-end">
+                <button type="submit" class="btn btn-primary" asp-controller="Home" asp-action="CheckAvailability">НАЛИЧНОСТ</button>
+            </div>
+        </div>
+    </form>
+    @if (!this.SignInManager.IsSignedIn(this.User))
+    {
+        <h5>За повече информация отидете към <a asp-controller="Login">Login</a></h5>
+    }
+</div>

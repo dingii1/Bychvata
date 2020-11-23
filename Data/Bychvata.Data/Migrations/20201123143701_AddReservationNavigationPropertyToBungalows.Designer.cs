@@ -4,14 +4,16 @@ using Bychvata.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bychvata.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201123143701_AddReservationNavigationPropertyToBungalows")]
+    partial class AddReservationNavigationPropertyToBungalows
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,43 +238,6 @@ namespace Bychvata.Data.Migrations
                     b.HasIndex("ReservationId");
 
                     b.ToTable("Bungalows");
-                });
-
-            modelBuilder.Entity("Bychvata.Data.Models.DateAvailable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("BungalowId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BungalowId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("DateAvailable");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.Document", b =>
@@ -646,17 +611,6 @@ namespace Bychvata.Data.Migrations
                     b.Navigation("Reservation");
                 });
 
-            modelBuilder.Entity("Bychvata.Data.Models.DateAvailable", b =>
-                {
-                    b.HasOne("Bychvata.Data.Models.Bungalow", "Bungalow")
-                        .WithMany("DatesAvailable")
-                        .HasForeignKey("BungalowId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Bungalow");
-                });
-
             modelBuilder.Entity("Bychvata.Data.Models.Document", b =>
                 {
                     b.HasOne("Bychvata.Data.Models.Guest", "Guest")
@@ -794,8 +748,6 @@ namespace Bychvata.Data.Migrations
 
             modelBuilder.Entity("Bychvata.Data.Models.Bungalow", b =>
                 {
-                    b.Navigation("DatesAvailable");
-
                     b.Navigation("Prices");
                 });
 

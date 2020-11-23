@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bychvata.Data.Models
 {
@@ -19,6 +20,7 @@ namespace Bychvata.Data.Models
 
         public ApplicationUser ApplicationUser { get; set; }
 
+        [ForeignKey("Bungalow")]
         public int BungalowId { get; set; }
 
         public Bungalow Bungalow { get; set; }

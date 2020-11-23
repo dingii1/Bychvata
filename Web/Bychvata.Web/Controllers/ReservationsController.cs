@@ -1,38 +1,53 @@
-﻿using Bychvata.Web.ViewModels.Models.BindingModels;
-using Bychvata.Web.ViewModels.Models.ViewModels;
+﻿using Bychvata.Data.Models;
+using Bychvata.Services.Data;
+using Bychvata.Web.ViewModels.Models.BindingModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Bychvata.Web.Controllers
 {
     public class ReservationsController : Controller
     {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IReservationsService reservationsService;
+
+        public ReservationsController(UserManager<ApplicationUser> userManager, IReservationsService reservationsService)
+        {
+            this.userManager = userManager;
+            this.reservationsService = reservationsService;
+        }
+
         // GET: ReservationsController
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         // GET: ReservationsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return this.View();
         }
 
         // GET: ReservationsController/Create
-        public ActionResult Create(AvailabilityViewModel model)
+        public ActionResult Create()
         {
-            return this.View(model);
+            return this.View();
         }
 
         // POST: ReservationsController/Create
         [HttpPost]
-        public ActionResult Create(ReservationCreateBindingModel model)
+        public async Task<ActionResult> Create(ReservationCreateBindingModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View();
             }
+
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.reservationsService.CreateReservation(model, user);
 
             return this.Redirect("/Home/Index");
         }

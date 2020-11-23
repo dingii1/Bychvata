@@ -1,10 +1,11 @@
 ﻿using Bychvata.Data.Models;
+using Bychvata.Services.Mapping;
 using System;
 using System.Collections.Generic;
 
 namespace Bychvata.Web.ViewModels.Models.BindingModels
 {
-    public class ReservationCreateBindingModel
+    public class ReservationCreateBindingModel : IMapTo<Reservation>
     {
         public int? BungalowId { get; set; }
 

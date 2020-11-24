@@ -32,7 +32,7 @@
             {
                 From = model.From,
                 To = model.To,
-                IsAvailable = false,
+                IsAvailable = true,
             };
 
             return this.View(viewModel);

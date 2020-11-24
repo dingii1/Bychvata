@@ -41,7 +41,7 @@
             {
                 From = model.From,
                 To = model.To,
-                IsAvailable = await this.reservationsService.CheckAvailability(model),
+                IsAvailable = false //await this.reservationsService.CheckAvailability(model),
             };
 
             viewModel.IsAvailable = true;

@@ -16,9 +16,5 @@ namespace Bychvata.Data.Models
         public int ReservationId { get; set; }
 
         public Reservation Reservation { get; set; }
-
-        public int? BungalowId { get; set; }
-
-        public Bungalow Bungalow { get; set; }
     }
 }

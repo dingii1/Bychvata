@@ -1,6 +1,7 @@
 ﻿using Bychvata.Data.Models;
 using Bychvata.Services.Data;
 using Bychvata.Web.ViewModels.Models.BindingModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bychvata.Web.Controllers
 {
+    [Authorize]
     public class ReservationsController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -32,8 +34,10 @@ namespace Bychvata.Web.Controllers
         }
 
         // GET: ReservationsController/Create
-        public ActionResult Create()
+        public ActionResult Create(AvailabilityBindingModel model)
         {
+            this.ViewData["Arrival"] = model.Arrival.Date.ToString("yyyy-MM-dd");
+            this.ViewData["Departure"] = model.Departure.Date.ToString("yyyy-MM-dd");
             return this.View();
         }
 

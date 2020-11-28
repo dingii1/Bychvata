@@ -14,18 +14,18 @@
         <div asp-validation-summary="All"></div>
         <div class="d-flex justify-content-around">
             <div class="form-group mb-0">
-                <label asp-for="From">
+                <label asp-for="Arrival">
                     <span class="required" title="Пристигане">Пристигане:</span>
                 </label>
-                <input type="date" class="form-control" asp-for="From" value="" />
-                <span asp-validation-for="From"></span>
+                <input type="date" class="form-control" asp-for="Arrival" value="" />
+                <span asp-validation-for="Arrival"></span>
             </div>
             <div class="form-group mb-0">
-                <label asp-for="To">
+                <label asp-for="Departure">
                     <span class="required" title="Заминаване">Заминаване:</span>
                 </label>
-                <input type="date" class="form-control mb-0" asp-for="To" value="" />
-                <span asp-validation-for="To"></span>
+                <input type="date" class="form-control mb-0" asp-for="Departure" value="" />
+                <span asp-validation-for="Departure"></span>
             </div>
             <div class="d-flex align-items-end">
                 <button type="submit" class="btn btn-primary" asp-controller="Home" asp-action="CheckAvailability">НАЛИЧНОСТ</button>

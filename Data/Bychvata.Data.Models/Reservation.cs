@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bychvata.Data.Models
 {
@@ -10,8 +9,8 @@ namespace Bychvata.Data.Models
     {
         public Reservation()
         {
+            this.BungalowsReservations = new HashSet<BungalowReservation>();
             this.GuestsReservations = new HashSet<GuestReservation>();
-
             this.Additions = new HashSet<Addition>();
         }
 
@@ -20,11 +19,6 @@ namespace Bychvata.Data.Models
 
         public ApplicationUser ApplicationUser { get; set; }
 
-        [ForeignKey("Bungalow")]
-        public int BungalowId { get; set; }
-
-        public Bungalow Bungalow { get; set; }
-
         public DateTime Arrival { get; set; }
 
         public DateTime Departure { get; set; }
@@ -32,6 +26,8 @@ namespace Bychvata.Data.Models
         public string Notes { get; set; }
 
         public decimal ReservationPrice { get; set; }
+
+        public virtual IEnumerable<BungalowReservation> BungalowsReservations { get; set; }
 
         public virtual IEnumerable<GuestReservation> GuestsReservations { get; set; }
 

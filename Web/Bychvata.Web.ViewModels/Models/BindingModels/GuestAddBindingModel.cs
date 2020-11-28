@@ -1,4 +1,5 @@
-﻿using Bychvata.Data.Models;
+﻿using Bychvata.Data.Common.Enums;
+using Bychvata.Data.Models;
 using System;
 
 namespace Bychvata.Web.ViewModels.Models.BindingModels
@@ -17,7 +18,7 @@ namespace Bychvata.Web.ViewModels.Models.BindingModels
 
         public string TelephoneNumber { get; set; }
 
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
 
         public DateTime BirthDate { get; set; }
 

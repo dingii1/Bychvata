@@ -39,8 +39,8 @@
 
             var viewModel = new AvailabilityViewModel()
             {
-                From = model.From,
-                To = model.To,
+                Arrival = model.Arrival,
+                Departure = model.Departure,
                 IsAvailable = await this.reservationsService.CheckAvailability(model),
             };
 

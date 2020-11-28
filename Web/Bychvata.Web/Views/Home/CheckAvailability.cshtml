@@ -7,7 +7,11 @@
 @if (Model.IsAvailable)
 {
     <h1>Има свободни бунгала за посочения от вас период.</h1>
-    <a asp-controller="Reservations" asp-action="Create">Резервирай сега!</a>
+    <form method="get" asp-controller="Reservations" asp-action="Create">
+        <input asp-for="Arrival" type="hidden" />
+        <input asp-for="Departure" type="hidden" />
+        <input type="submit" class="btn btn-dark" value="Резервирай сега!" />
+    </form>
 }
 else
 {

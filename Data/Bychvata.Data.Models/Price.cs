@@ -5,9 +5,7 @@ namespace Bychvata.Data.Models
 {
     public class Price : BaseDeletableModel<int>
     {
-        public DateTime From { get; set; }
-
-        public DateTime To { get; set; }
+        public DateTime Date { get; set; }
 
         public double? DiscountPercent { get; set; }
 

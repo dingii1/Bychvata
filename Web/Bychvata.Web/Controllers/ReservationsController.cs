@@ -1,10 +1,13 @@
 ﻿using Bychvata.Data.Models;
 using Bychvata.Services.Data;
 using Bychvata.Web.ViewModels.Models.BindingModels;
+using Bychvata.Web.ViewModels.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Bychvata.Web.Controllers
@@ -50,15 +53,36 @@ namespace Bychvata.Web.Controllers
                 return this.View();
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
-            await this.reservationsService.CreateReservation(model, user);
+            string userIdClaimValue = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await this.reservationsService.CreateReservation(model, userIdClaimValue);
 
-            return this.Redirect("/Home/Index");
+            if (result >= 0)
+            {
+                return this.RedirectToAction("Success");
+            }
+            else
+            {
+                return this.RedirectToAction("Failed");
+            }
+        }
+
+        public IActionResult Success()
+        {
+            return this.View();
+        }
+
+        public IActionResult Failed()
+        {
+            return this.View();
         }
 
         public IActionResult MyReservations()
         {
-            return this.View();
+            string userIdClaimValue = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ICollection<ReservationViewModel> reservations = this.reservationsService.GetReservations(userIdClaimValue);
+
+            return this.View(reservations);
         }
 
         // GET: ReservationsController/Edit/5

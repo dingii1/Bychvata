@@ -1,10 +1,12 @@
 ﻿namespace Bychvata.Web.Controllers
 {
+    using Bychvata.Data.Models;
     using Bychvata.Services.Data;
     using Bychvata.Web.ViewModels;
     using Bychvata.Web.ViewModels.Models.BindingModels;
     using Bychvata.Web.ViewModels.Models.ViewModels;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
 
@@ -37,14 +39,15 @@
                 return this.RedirectToAction("Index");
             }
 
+            ICollection<Bungalow> bungalows = this.reservationsService.CheckAvailability(model);
+
             var viewModel = new AvailabilityViewModel()
             {
                 Arrival = model.Arrival,
                 Departure = model.Departure,
-                IsAvailable = await this.reservationsService.CheckAvailability(model),
+                IsAvailable = bungalows != null,
             };
 
-            viewModel.IsAvailable = true;
             return this.View(viewModel);
         }
 

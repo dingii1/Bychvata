@@ -9,7 +9,6 @@ namespace Bychvata.Data.Models
         public Bungalow()
         {
             this.BungalowsReservations = new HashSet<BungalowReservation>();
-            this.Prices = new HashSet<Price>();
             this.DatesAvailable = new HashSet<DateAvailable>();
         }
 
@@ -26,8 +25,6 @@ namespace Bychvata.Data.Models
         public string Notes { get; set; }
 
         public virtual IEnumerable<BungalowReservation> BungalowsReservations { get; set; }
-
-        public virtual IEnumerable<Price> Prices { get; set; }
 
         public virtual IEnumerable<DateAvailable> DatesAvailable { get; set; }
     }

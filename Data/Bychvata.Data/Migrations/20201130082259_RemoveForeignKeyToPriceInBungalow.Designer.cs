@@ -4,14 +4,16 @@ using Bychvata.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bychvata.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201130082259_RemoveForeignKeyToPriceInBungalow")]
+    partial class RemoveForeignKeyToPriceInBungalow
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,16 +294,11 @@ namespace Bychvata.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PriceId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BungalowId");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("PriceId");
 
                     b.ToTable("DatesAvailable");
                 });
@@ -673,15 +670,7 @@ namespace Bychvata.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Bychvata.Data.Models.Price", "Price")
-                        .WithMany("DatesAvailable")
-                        .HasForeignKey("PriceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Bungalow");
-
-                    b.Navigation("Price");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.Document", b =>
@@ -810,11 +799,6 @@ namespace Bychvata.Data.Migrations
             modelBuilder.Entity("Bychvata.Data.Models.Guest", b =>
                 {
                     b.Navigation("GuestsReservations");
-                });
-
-            modelBuilder.Entity("Bychvata.Data.Models.Price", b =>
-                {
-                    b.Navigation("DatesAvailable");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.Reservation", b =>

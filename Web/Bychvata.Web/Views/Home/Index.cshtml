@@ -34,6 +34,9 @@
     </form>
     @if (!this.SignInManager.IsSignedIn(this.User))
     {
-        <h5>За повече информация отидете към <a asp-controller="Login">Login</a></h5>
+        <h5>
+            За повече информация отидете към
+            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </h5>
     }
 </div>

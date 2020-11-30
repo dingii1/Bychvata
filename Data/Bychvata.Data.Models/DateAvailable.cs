@@ -14,5 +14,10 @@ namespace Bychvata.Data.Models
         public int BungalowId { get; set; }
 
         public Bungalow Bungalow { get; set; }
+
+        [ForeignKey("Price")]
+        public int PriceId { get; set; }
+
+        public Price Price { get; set; }
     }
 }

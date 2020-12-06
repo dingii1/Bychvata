@@ -3,65 +3,60 @@
 @model GuestAddBindingModel
 
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Добавяне на гост";
 }
 
-<h1>Add</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>Guest</h4>
+<h4>Гост</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Add">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<input type="hidden" asp-for="Id" />*@
+            <input type="hidden" asp-for="ReservationId" />
             <div class="form-group">
-                <label asp-for="Nationality" class="control-label"></label>
+                <label asp-for="Nationality" class="control-label">Националност:</label>
                 <input asp-for="Nationality" class="form-control" />
                 <span asp-validation-for="Nationality" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
+                <label asp-for="FirstName" class="control-label">Име:</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MiddleName" class="control-label"></label>
+                <label asp-for="MiddleName" class="control-label">Презиме:</label>
                 <input asp-for="MiddleName" class="form-control" />
                 <span asp-validation-for="MiddleName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
+                <label asp-for="LastName" class="control-label">Фамилия:</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PersonalIdentificationNumber" class="control-label"></label>
+                <label asp-for="PersonalIdentificationNumber" class="control-label">ЕГН:</label>
                 <input asp-for="PersonalIdentificationNumber" class="form-control" />
                 <span asp-validation-for="PersonalIdentificationNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TelephoneNumber" class="control-label"></label>
+                <label asp-for="TelephoneNumber" class="control-label">Телефон:</label>
                 <input asp-for="TelephoneNumber" class="form-control" />
                 <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
+                <label asp-for="Gender" class="control-label">Пол:</label>
                 <select asp-for="Gender" class="form-control" asp-items="@Html.GetEnumSelectList<Gender>()"></select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" type="date" class="form-control" />
+                <label asp-for="BirthDate" class="control-label">Рождена дата:</label>
+                <input asp-for="BirthDate" type="date" value="" class="form-control" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Document.Type" class="control-label"></label>
-                <select asp-for="Document.Type" class="form-control" asp-items="@Html.GetEnumSelectList<DocumentType>()"></select>
-                <span asp-validation-for="Document.Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" />
+                <input type="submit" value="Добави" class="btn btn-primary" />
             </div>
         </form>
     </div>

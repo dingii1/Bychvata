@@ -7,11 +7,9 @@ namespace Bychvata.Web.ViewModels.Models.ViewModels
 {
     public class ReservationViewModel : ReservationBaseModel, IMapFrom<Reservation>
     {
+        public int Id { get; set; }
+
         public DateTime CreatedOn { get; set; }
-
-        public int? BungalowNumber { get; set; }
-
-        public string Notes { get; set; }
 
         public decimal ReservationPrice { get; set; }
     }

@@ -6,6 +6,7 @@
     using Bychvata.Data.Models;
     using Bychvata.Data.Repositories;
     using Bychvata.Data.Seeding;
+    using Bychvata.Services;
     using Bychvata.Services.Data;
     using Bychvata.Services.Mapping;
     using Bychvata.Services.Messaging;
@@ -64,6 +65,9 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IReservationsService, ReservationsService>();
+            services.AddTransient<IBungalowsService, BungalowsService>();
+            services.AddTransient<IGuestsService, GuestsService>();
+            services.AddTransient<IDocumentsService, DocumentsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

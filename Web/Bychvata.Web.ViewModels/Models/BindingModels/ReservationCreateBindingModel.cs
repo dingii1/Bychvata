@@ -7,10 +7,15 @@ namespace Bychvata.Web.ViewModels.Models.BindingModels
 {
     public class ReservationCreateBindingModel : ReservationBaseModel, IMapTo<Reservation>
     {
+        public ReservationCreateBindingModel()
+        {
+            this.Additions = new HashSet<Addition>();
+        }
+
         public int? BungalowId { get; set; }
 
         public string Notes { get; set; }
 
-        public IEnumerable<Addition> Additions { get; set; }
+        public ICollection<Addition> Additions { get; set; }
     }
 }

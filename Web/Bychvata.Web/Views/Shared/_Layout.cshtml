@@ -32,7 +32,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="MyReservations">Моите резервации</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Bungalows" asp-action="Index">Бунгала</a>
                             </li>
                         </ul>
                     }
@@ -44,6 +44,7 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
+            <partial name="_CookieConsentPartial.cshtml">
             @this.RenderBody()
         </main>
     </div>

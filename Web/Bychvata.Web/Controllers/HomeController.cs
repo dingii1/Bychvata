@@ -34,9 +34,10 @@
         {
             //Use AvailabilityService returns true or false
             //Add wheather forecast api for the selected days if there are available and OpenStreetMap with location
+            //TODO: Repair validations message
             if (!ModelState.IsValid)
             {
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("Index", model);
             }
 
             ICollection<Bungalow> bungalows = this.reservationsService.CheckAvailability(model);
@@ -45,7 +46,7 @@
             {
                 Arrival = model.Arrival,
                 Departure = model.Departure,
-                IsAvailable = bungalows != null,
+                IsAvailable = bungalows.Count > 0 ? true : false,
             };
 
             return this.View(viewModel);

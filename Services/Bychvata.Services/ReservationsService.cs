@@ -15,13 +15,11 @@ namespace Bychvata.Services.Data
     {
         private readonly IDeletableEntityRepository<Bungalow> bungalowsRepository;
         private readonly IDeletableEntityRepository<Reservation> reservationsRepository;
-        private readonly IDeletableEntityRepository<BungalowReservation> bungalowReservationsRepository;
 
-        public ReservationsService(IDeletableEntityRepository<Bungalow> bungalowsRepository, IDeletableEntityRepository<Reservation> reservationsRepository, IDeletableEntityRepository<BungalowReservation> bungalowReservationsRepository)
+        public ReservationsService(IDeletableEntityRepository<Bungalow> bungalowsRepository, IDeletableEntityRepository<Reservation> reservationsRepository)
         {
             this.bungalowsRepository = bungalowsRepository;
             this.reservationsRepository = reservationsRepository;
-            this.bungalowReservationsRepository = bungalowReservationsRepository;
         }
 
         public ICollection<Bungalow> CheckAvailability(AvailabilityBindingModel model)
@@ -76,6 +74,7 @@ namespace Bychvata.Services.Data
                 Departure = model.Departure,
                 Notes = model.Notes,
                 ReservationPrice = 0,
+                BungalowId = bungalow.Id,
             };
 
             foreach (var date in bungalow.DatesAvailable)
@@ -92,16 +91,21 @@ namespace Bychvata.Services.Data
             await this.reservationsRepository.AddAsync(reservation);
             await this.reservationsRepository.SaveChangesAsync();
 
-            BungalowReservation bungalowReservation = new BungalowReservation
-            {
-                BungalowId = bungalow.Id,
-                ReservationId = reservation.Id,
-            };
-
-            await this.bungalowReservationsRepository.AddAsync(bungalowReservation);
-            await this.bungalowReservationsRepository.SaveChangesAsync();
-
             return reservation.Id;
+        }
+
+        public ReservationDetailsViewModel GetById(int id)
+        {
+            ReservationDetailsViewModel rdvm = this.reservationsRepository.AllAsNoTracking()
+                .Include(r => r.GuestsReservations)
+                .Include(r => r.Additions)
+                .Where(r => r.Id == id)
+                .To<ReservationDetailsViewModel>()
+                .FirstOrDefault();
+
+            //rdvm.Guests = this.reservationsRepository
+
+                return rdvm;
         }
 
         public ICollection<ReservationViewModel> GetReservations(string userIdClaimValue)
@@ -109,6 +113,7 @@ namespace Bychvata.Services.Data
             return this.reservationsRepository
                 .AllAsNoTracking()
                 .Where(r => r.ApplicationUser.Id == userIdClaimValue)
+                .Include(r => r.Bungalow)
                 .To<ReservationViewModel>()
                 .ToList();
         }

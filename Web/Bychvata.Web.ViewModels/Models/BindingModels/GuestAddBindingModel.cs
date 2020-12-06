@@ -1,11 +1,14 @@
 ﻿using Bychvata.Data.Common.Enums;
 using Bychvata.Data.Models;
+using Bychvata.Services.Mapping;
 using System;
 
 namespace Bychvata.Web.ViewModels.Models.BindingModels
 {
-    public class GuestAddBindingModel
+    public class GuestAddBindingModel : IMapTo<Guest>
     {
+        public int ReservationId { get; set; }
+
         public string Nationality { get; set; }
 
         public string FirstName { get; set; }
@@ -22,6 +25,8 @@ namespace Bychvata.Web.ViewModels.Models.BindingModels
 
         public DateTime BirthDate { get; set; }
 
-        public Document Document { get; set; }
+        public DocumentType DocumentType { get; set; }
+
+        public string DocumentNumber { get; set; }
     }
 }

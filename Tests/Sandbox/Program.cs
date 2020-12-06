@@ -6,7 +6,6 @@
     using Bychvata.Data.Models;
     using Bychvata.Data.Repositories;
     using Bychvata.Data.Seeding;
-    using Bychvata.Services.Data;
     using Bychvata.Services.Messaging;
     using CommandLine;
     using Microsoft.EntityFrameworkCore;
@@ -49,8 +48,8 @@
         {
             var sw = Stopwatch.StartNew();
 
-            var settingsService = serviceProvider.GetService<ISettingsService>();
-            Console.WriteLine($"Count of settings: {settingsService.GetCount()}");
+            //var settingsService = serviceProvider.GetService<IReservationsService>();
+            //Console.WriteLine($"Count of settings: {settingsService.GetCount()}");
 
             Console.WriteLine(sw.Elapsed);
             return await Task.FromResult(0);

@@ -33,7 +33,9 @@ namespace Bychvata.Web.Controllers
         // GET: ReservationsController/Details/5
         public ActionResult Details(int id)
         {
-            return this.View();
+            ReservationDetailsViewModel model = this.reservationsService.GetById(id);
+
+            return this.View(model);
         }
 
         // GET: ReservationsController/Create
@@ -88,7 +90,9 @@ namespace Bychvata.Web.Controllers
         // GET: ReservationsController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ReservationDetailsViewModel model = this.reservationsService.GetById(id);
+
+            return this.View(model);
         }
 
         // POST: ReservationsController/Edit/5

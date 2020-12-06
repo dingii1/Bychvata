@@ -9,7 +9,6 @@ namespace Bychvata.Data.Models
     {
         public Reservation()
         {
-            this.BungalowsReservations = new HashSet<BungalowReservation>();
             this.GuestsReservations = new HashSet<GuestReservation>();
             this.Additions = new HashSet<Addition>();
         }
@@ -27,7 +26,9 @@ namespace Bychvata.Data.Models
 
         public decimal ReservationPrice { get; set; }
 
-        public virtual IEnumerable<BungalowReservation> BungalowsReservations { get; set; }
+        public int? BungalowId { get; set; }
+
+        public Bungalow Bungalow { get; set; }
 
         public virtual IEnumerable<GuestReservation> GuestsReservations { get; set; }
 

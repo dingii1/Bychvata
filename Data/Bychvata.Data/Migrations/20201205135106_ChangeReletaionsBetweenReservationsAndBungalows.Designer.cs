@@ -4,35 +4,22 @@ using Bychvata.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bychvata.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201205135106_ChangeReletaionsBetweenReservationsAndBungalows")]
+    partial class ChangeReletaionsBetweenReservationsAndBungalows
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
-
-            modelBuilder.Entity("AdditionReservation", b =>
-                {
-                    b.Property<int>("AdditionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReservationsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AdditionsId", "ReservationsId");
-
-                    b.HasIndex("ReservationsId");
-
-                    b.ToTable("AdditionReservation");
-                });
 
             modelBuilder.Entity("Bychvata.Data.Models.Addition", b =>
                 {
@@ -59,12 +46,17 @@ namespace Bychvata.Data.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ReservationId");
 
                     b.ToTable("Additions");
                 });
@@ -605,19 +597,15 @@ namespace Bychvata.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AdditionReservation", b =>
+            modelBuilder.Entity("Bychvata.Data.Models.Addition", b =>
                 {
-                    b.HasOne("Bychvata.Data.Models.Addition", null)
-                        .WithMany()
-                        .HasForeignKey("AdditionsId")
+                    b.HasOne("Bychvata.Data.Models.Reservation", "Reservation")
+                        .WithMany("Additions")
+                        .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Bychvata.Data.Models.Reservation", null)
-                        .WithMany()
-                        .HasForeignKey("ReservationsId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.ApplicationUser", b =>
@@ -789,6 +777,8 @@ namespace Bychvata.Data.Migrations
 
             modelBuilder.Entity("Bychvata.Data.Models.Reservation", b =>
                 {
+                    b.Navigation("Additions");
+
                     b.Navigation("GuestsReservations");
                 });
 #pragma warning restore 612, 618

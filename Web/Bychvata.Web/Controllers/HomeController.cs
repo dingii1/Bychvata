@@ -6,6 +6,7 @@
     using Bychvata.Web.ViewModels.Models.BindingModels;
     using Bychvata.Web.ViewModels.Models.ViewModels;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
@@ -21,7 +22,9 @@
 
         public IActionResult Index()
         {
-            return this.View();
+            var model = new AvailabilityBindingModel();
+
+            return this.View(model);
         }
 
         public IActionResult Privacy()
@@ -29,12 +32,16 @@
             return this.View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CheckAvailability(AvailabilityBindingModel model)
+        public async Task<IActionResult> CheckAvailability(string arrival, string departure)
         {
-            //Use AvailabilityService returns true or false
-            //Add wheather forecast api for the selected days if there are available and OpenStreetMap with location
-            //TODO: Repair validations message
+            var model = new AvailabilityBindingModel
+            {
+                Arrival = Convert.ToDateTime(arrival),
+                Departure = Convert.ToDateTime(departure),
+            };
+
+            //Add wheather forecast api for the selected days if there are available
+            //TODO: Repair validations messagges
             if (!ModelState.IsValid)
             {
                 return this.RedirectToAction("Index", model);
@@ -49,7 +56,7 @@
                 IsAvailable = bungalows.Count > 0 ? true : false,
             };
 
-            return this.View(viewModel);
+            return this.PartialView("_CheckAvailabilityPartial", viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

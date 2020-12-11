@@ -6,7 +6,7 @@
 
 @if (Model.IsAvailable)
 {
-    <h1>Има свободни бунгала за посочения от вас период.</h1>
+    <h3>Има свободни бунгала за посочения от вас период.</h3>
     <form method="get" asp-controller="Reservations" asp-action="Create">
         <input asp-for="Arrival" type="hidden" />
         <input asp-for="Departure" type="hidden" />
@@ -15,8 +15,7 @@
 }
 else
 {
-    <h1>Няма свободни места за посочения от вас период, моля посочете други дати.</h1>
-    <a class="alert" asp-controller="Home" asp-action="Index">Провери наличност.</a>
+    <h3>Няма свободни места за посочения от вас период, моля посочете други дати.</h3>
 }
 
 @section Scripts {

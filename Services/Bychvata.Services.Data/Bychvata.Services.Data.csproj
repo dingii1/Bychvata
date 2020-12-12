@@ -19,9 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Bychvata.Common\Bychvata.Common.csproj" />
     <ProjectReference Include="..\..\Data\Bychvata.Data.Common\Bychvata.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\Bychvata.Data.Models\Bychvata.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\Bychvata.Web.ViewModels\Bychvata.Web.ViewModels.csproj" />
     <ProjectReference Include="..\Bychvata.Services.Mapping\Bychvata.Services.Mapping.csproj" />
   </ItemGroup>
-
 </Project>

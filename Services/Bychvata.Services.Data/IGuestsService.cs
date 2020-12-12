@@ -2,7 +2,7 @@
 using Bychvata.Web.ViewModels.Models.BindingModels;
 using System.Threading.Tasks;
 
-namespace Bychvata.Services
+namespace Bychvata.Services.Data
 {
     public interface IGuestsService
     {

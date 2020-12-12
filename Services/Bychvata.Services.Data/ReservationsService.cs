@@ -15,11 +15,13 @@ namespace Bychvata.Services.Data
     {
         private readonly IDeletableEntityRepository<Bungalow> bungalowsRepository;
         private readonly IDeletableEntityRepository<Reservation> reservationsRepository;
+        private readonly IDeletableEntityRepository<Guest> guestsRepository;
 
-        public ReservationsService(IDeletableEntityRepository<Bungalow> bungalowsRepository, IDeletableEntityRepository<Reservation> reservationsRepository)
+        public ReservationsService(IDeletableEntityRepository<Bungalow> bungalowsRepository, IDeletableEntityRepository<Reservation> reservationsRepository, IDeletableEntityRepository<Guest> guestsRepository)
         {
             this.bungalowsRepository = bungalowsRepository;
             this.reservationsRepository = reservationsRepository;
+            this.guestsRepository = guestsRepository;
         }
 
         public ICollection<Bungalow> CheckAvailability(AvailabilityBindingModel model)
@@ -96,16 +98,24 @@ namespace Bychvata.Services.Data
 
         public ReservationDetailsViewModel GetById(int id)
         {
-            ReservationDetailsViewModel rdvm = this.reservationsRepository.AllAsNoTracking()
+            var reservationsDetailViewModel = this.reservationsRepository.AllAsNoTracking()
                 .Include(r => r.GuestsReservations)
+                .ThenInclude(gr => gr.Guest)
                 .Include(r => r.Additions)
                 .Where(r => r.Id == id)
                 .To<ReservationDetailsViewModel>()
                 .FirstOrDefault();
 
-            //rdvm.Guests = this.reservationsRepository
+            var reservationGuests = this.guestsRepository.AllAsNoTracking()
+                .Where(g => g.GuestsReservations.All(gr => gr.ReservationId == id))
+                .ToList();
 
-                return rdvm;
+            foreach (var guest in reservationGuests)
+            {
+                reservationsDetailViewModel.Guests.Add(guest);
+            }
+
+            return reservationsDetailViewModel;
         }
 
         public ICollection<ReservationViewModel> GetReservations(string userIdClaimValue)

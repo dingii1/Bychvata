@@ -1,5 +1,5 @@
 ﻿using Bychvata.Data.Models;
-using Bychvata.Services;
+using Bychvata.Services.Data;
 using Bychvata.Web.ViewModels.Models.BindingModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -23,13 +23,13 @@ namespace Bychvata.Web.Controllers
         // GET: GuestsController
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         // GET: GuestsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return this.View();
         }
 
         // GET: GuestsController/Add

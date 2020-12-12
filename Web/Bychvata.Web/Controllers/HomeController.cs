@@ -14,10 +14,12 @@
     public class HomeController : BaseController
     {
         private readonly IReservationsService reservationsService;
+        private readonly IAdditionsService additionsService;
 
-        public HomeController(IReservationsService reservationsService)
+        public HomeController(IReservationsService reservationsService, IAdditionsService additionsService)
         {
             this.reservationsService = reservationsService;
+            this.additionsService = additionsService;
         }
 
         public IActionResult Index()
@@ -57,6 +59,18 @@
             };
 
             return this.PartialView("_CheckAvailabilityPartial", viewModel);
+        }
+
+        public IActionResult Conditions()
+        {
+            return this.View();
+        }
+
+        public IActionResult Prices()
+        {
+            var model = this.additionsService.GetAll();
+
+            return this.View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

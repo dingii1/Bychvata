@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Bychvata.Web.ViewModels.Models.ViewModels
 {
-    public class ReservationDetailsViewModel : ReservationViewModel, IMapFrom<Reservation>, IHaveCustomMappings
+    public class ReservationDetailsViewModel : ReservationViewModel, IMapFrom<Reservation>
     {
         public ReservationDetailsViewModel()
         {
-            this.Guests = new HashSet<GuestViewModel>();
+            this.Guests = new HashSet<Guest>();
             this.Additions = new HashSet<Addition>();
         }
 
@@ -17,14 +17,8 @@ namespace Bychvata.Web.ViewModels.Models.ViewModels
 
         public string Notes { get; set; }
 
-        public ICollection<GuestViewModel> Guests { get; set; }
+        public ICollection<Guest> Guests { get; set; }
 
         public ICollection<Addition> Additions { get; set; }
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Reservation, ReservationDetailsViewModel>()
-                .ForMember(x => x.Guests, opt => opt.MapFrom(x => x.GuestsReservations));
-        }
     }
 }

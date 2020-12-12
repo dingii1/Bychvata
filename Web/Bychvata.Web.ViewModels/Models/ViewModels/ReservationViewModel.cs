@@ -12,5 +12,7 @@ namespace Bychvata.Web.ViewModels.Models.ViewModels
         public DateTime CreatedOn { get; set; }
 
         public decimal ReservationPrice { get; set; }
+
+        public int GuestsReservationsCount { get; set; }
     }
 }

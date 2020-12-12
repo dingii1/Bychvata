@@ -1,7 +1,7 @@
 ﻿using Bychvata.Web.ViewModels.Models.ViewModels;
 using System.Collections.Generic;
 
-namespace Bychvata.Services
+namespace Bychvata.Services.Data
 {
     public interface IBungalowsService
     {

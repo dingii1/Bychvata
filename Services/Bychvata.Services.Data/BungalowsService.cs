@@ -5,7 +5,7 @@ using Bychvata.Web.ViewModels.Models.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bychvata.Services
+namespace Bychvata.Services.Data
 {
     public class BungalowsService : IBungalowsService
     {

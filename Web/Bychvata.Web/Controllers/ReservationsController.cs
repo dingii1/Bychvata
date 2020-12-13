@@ -1,5 +1,7 @@
-﻿using Bychvata.Data.Models;
+﻿using Bychvata.Common;
+using Bychvata.Data.Models;
 using Bychvata.Services.Data;
+using Bychvata.Services.Messaging;
 using Bychvata.Web.ViewModels.Models.BindingModels;
 using Bychvata.Web.ViewModels.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -17,11 +19,13 @@ namespace Bychvata.Web.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IReservationsService reservationsService;
+        private readonly IEmailSender emailSender;
 
-        public ReservationsController(UserManager<ApplicationUser> userManager, IReservationsService reservationsService)
+        public ReservationsController(UserManager<ApplicationUser> userManager, IReservationsService reservationsService, IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.reservationsService = reservationsService;
+            this.emailSender = emailSender;
         }
 
         // GET: ReservationsController
@@ -56,10 +60,13 @@ namespace Bychvata.Web.Controllers
             }
 
             string userIdClaimValue = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userEmailClaimValue = this.HttpContext.User.FindFirstValue(ClaimTypes.Email);
             var result = await this.reservationsService.CreateReservation(model, userIdClaimValue);
 
             if (result >= 0)
             {
+                await this.emailSender.SendEmailAsync(GlobalConstants.SendEmailFrom, GlobalConstants.SystemName, userEmailClaimValue, "Успешна резервация", EmailTemplates.ConfirmReservationTemplate());
+
                 return this.RedirectToAction("Success");
             }
             else

@@ -2,10 +2,11 @@
 using Bychvata.Data.Models;
 using Bychvata.Services.Mapping;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bychvata.Web.ViewModels.Models.ViewModels
 {
-    public class ReservationDetailsViewModel : ReservationViewModel, IMapFrom<Reservation>
+    public class ReservationDetailsViewModel : ReservationViewModel, IMapFrom<Reservation>, IHaveCustomMappings
     {
         public ReservationDetailsViewModel()
         {
@@ -20,5 +21,12 @@ namespace Bychvata.Web.ViewModels.Models.ViewModels
         public ICollection<Guest> Guests { get; set; }
 
         public ICollection<Addition> Additions { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Reservation, ReservationDetailsViewModel>()
+                .ForMember(x => x.Guests, opt =>
+                    opt.MapFrom(x => x.GuestsReservations.Where(y => y.ReservationId == x.Id).Select(z => z.Guest)));
+        }
     }
 }

@@ -96,26 +96,20 @@ namespace Bychvata.Services.Data
             return reservation.Id;
         }
 
-        public ReservationDetailsViewModel GetById(int id)
+        public T GetById<T>(int id)
         {
-            var reservationsDetailViewModel = this.reservationsRepository.AllAsNoTracking()
+            return this.reservationsRepository.AllAsNoTracking()
                 .Include(r => r.GuestsReservations)
                 .ThenInclude(gr => gr.Guest)
                 .Include(r => r.Additions)
                 .Where(r => r.Id == id)
-                .To<ReservationDetailsViewModel>()
+                .To<T>()
                 .FirstOrDefault();
+        }
 
-            var reservationGuests = this.guestsRepository.AllAsNoTracking()
-                .Where(g => g.GuestsReservations.All(gr => gr.ReservationId == id))
-                .ToList();
-
-            foreach (var guest in reservationGuests)
-            {
-                reservationsDetailViewModel.Guests.Add(guest);
-            }
-
-            return reservationsDetailViewModel;
+        public async Task UpdateAsync(int id, ReservationEditBindingModel model)
+        {
+            throw new NotImplementedException();
         }
 
         public ICollection<ReservationViewModel> GetReservations(string userIdClaimValue)

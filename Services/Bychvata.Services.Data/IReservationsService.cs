@@ -14,6 +14,8 @@ namespace Bychvata.Services.Data
 
         ICollection<ReservationViewModel> GetReservations(string userIdClaimValue);
 
-        ReservationDetailsViewModel GetById(int id);
+        T GetById<T>(int id);
+
+        Task UpdateAsync(int id, ReservationEditBindingModel model);
     }
 }

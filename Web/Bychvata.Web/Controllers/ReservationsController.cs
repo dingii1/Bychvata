@@ -28,16 +28,10 @@ namespace Bychvata.Web.Controllers
             this.emailSender = emailSender;
         }
 
-        // GET: ReservationsController
-        public ActionResult Index()
-        {
-            return this.View();
-        }
-
         // GET: ReservationsController/Details/5
         public ActionResult Details(int id)
         {
-            ReservationDetailsViewModel model = this.reservationsService.GetById(id);
+            ReservationDetailsViewModel model = this.reservationsService.GetById<ReservationDetailsViewModel>(id);
 
             return this.View(model);
         }
@@ -95,31 +89,31 @@ namespace Bychvata.Web.Controllers
         }
 
         // GET: ReservationsController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
-            ReservationDetailsViewModel model = this.reservationsService.GetById(id);
+            ReservationEditBindingModel model = this.reservationsService.GetById<ReservationEditBindingModel>(id);
 
             return this.View(model);
         }
 
         // POST: ReservationsController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, ReservationCreateBindingModel model)
+        public async Task<IActionResult> Edit(int id, ReservationEditBindingModel model)
         {
-            try
+            if (!this.ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return this.View(model);
             }
-            catch
-            {
-                return View();
-            }
+
+            await this.reservationsService.UpdateAsync(id, model);
+
+            return this.RedirectToAction(nameof(this.MyReservations));
         }
 
         // GET: ReservationsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return this.View();
         }
 
         // POST: ReservationsController/Delete/5
@@ -128,11 +122,11 @@ namespace Bychvata.Web.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(this.MyReservations));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
     }

@@ -78,18 +78,18 @@ namespace Bychvata.Web.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
 
         // GET: GuestsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return this.View();
         }
 
         // POST: GuestsController/Delete/5
@@ -99,11 +99,11 @@ namespace Bychvata.Web.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
     }

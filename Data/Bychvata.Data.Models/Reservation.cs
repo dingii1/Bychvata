@@ -30,8 +30,8 @@ namespace Bychvata.Data.Models
 
         public Bungalow Bungalow { get; set; }
 
-        public virtual IEnumerable<GuestReservation> GuestsReservations { get; set; }
+        public virtual ICollection<GuestReservation> GuestsReservations { get; set; }
 
-        public virtual IEnumerable<Addition> Additions { get; set; }
+        public virtual ICollection<Addition> Additions { get; set; }
     }
 }

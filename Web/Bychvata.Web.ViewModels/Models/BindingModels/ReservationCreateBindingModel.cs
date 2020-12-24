@@ -9,13 +9,13 @@ namespace Bychvata.Web.ViewModels.Models.BindingModels
     {
         public ReservationCreateBindingModel()
         {
-            this.Additions = new HashSet<Addition>();
+            this.Additions = new List<AdditionBindingModel>();
         }
 
         public int? BungalowId { get; set; }
 
         public string Notes { get; set; }
 
-        public ICollection<Addition> Additions { get; set; }
+        public IList<AdditionBindingModel> Additions { get; set; }
     }
 }

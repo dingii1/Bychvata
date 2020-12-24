@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -19,12 +20,14 @@ namespace Bychvata.Web.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IReservationsService reservationsService;
+        private readonly IAdditionsService additionsService;
         private readonly IEmailSender emailSender;
 
-        public ReservationsController(UserManager<ApplicationUser> userManager, IReservationsService reservationsService, IEmailSender emailSender)
+        public ReservationsController(UserManager<ApplicationUser> userManager, IReservationsService reservationsService, IAdditionsService additionsService, IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.reservationsService = reservationsService;
+            this.additionsService = additionsService;
             this.emailSender = emailSender;
         }
 
@@ -92,6 +95,15 @@ namespace Bychvata.Web.Controllers
         public IActionResult Edit(int id)
         {
             ReservationEditBindingModel model = this.reservationsService.GetById<ReservationEditBindingModel>(id);
+
+            model.Additions = this.additionsService.GetAll()
+                .Select(addition => new AdditionBindingModel
+                {
+                    Id = addition.Id,
+                    Name = addition.Name,
+                    IsIncluded = model.Additions.Any(reservetionAddition => reservetionAddition.Id == addition.Id),
+                })
+                .ToList();
 
             return this.View(model);
         }

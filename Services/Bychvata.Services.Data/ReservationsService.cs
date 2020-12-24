@@ -107,9 +107,29 @@ namespace Bychvata.Services.Data
                 .FirstOrDefault();
         }
 
-        public async Task UpdateAsync(int id, ReservationEditBindingModel model)
+        public async Task UpdateAsync(int reservationId, ReservationEditBindingModel model)
         {
-            throw new NotImplementedException();
+            Reservation reservation = this.reservationsRepository
+                .All()
+                .Include(r => r.Additions)
+                .Where(r => r.Id == reservationId)
+                .FirstOrDefault();
+
+            reservation.Notes = model.Notes;
+
+            reservation.Additions.Clear();
+
+            foreach (var addition in model.Additions)
+            {
+                if (addition.IsIncluded)
+                {
+                    reservation.Additions.Add(new Addition { Id = addition.Id });
+                }
+            }
+
+            this.reservationsRepository.Update(reservation);
+
+            await this.reservationsRepository.SaveChangesAsync();
         }
 
         public ICollection<ReservationViewModel> GetReservations(string userIdClaimValue)

@@ -29,14 +29,17 @@
                     <span asp-validation-for="Departure" class="text-danger"></span>
                 </div>
                 <div class="d-flex align-items-end">
-                    <button id="availability" type="button" class="btn btn-primary">НАЛИЧНОСТ</button>
+                    <button type="submit" class="btn btn-primary">НАЛИЧНОСТ</button>
                 </div>
             </div>
         </form>
     </div>
 
     <div class="container-fluid mb-4">
-        <div id="is-available"></div>
+        @if (Model.ShouldShowAvailabilityDetails)
+        {
+            <partial name="_CheckAvailabilityPartial" />
+        }
     </div>
 
     <div class="container-fluid mb-3" id="mapdiv" style="width:1080px; height:295px"></div>
@@ -67,14 +70,5 @@
         map.addLayer(markers);
         markers.addMarker(new OpenLayers.Marker(lonLat));
         map.setCenter(lonLat, zoom);
-    </script>
-
-    <script>
-        $("#availability").click(function () {
-            var arrival = $("#arrival").val();
-            var departure = $("#departure").val();
-
-            $("#is-available").load('/Home/CheckAvailability?' + 'Arrival=' + `${arrival}` + '&Departure=' + `${departure}`);
-        });
     </script>
 }

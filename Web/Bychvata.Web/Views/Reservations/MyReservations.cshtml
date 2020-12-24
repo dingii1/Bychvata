@@ -51,9 +51,10 @@
                 @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Детайли</a> |
                 @*@Html.ActionLink("Добави гост", "Add", "Guests", new { id = item.Id })*@
-                <a asp-controller="Guests" asp-action="Add" asp-route-id="@item.Id" class="btn btn-secondary">Добави гост</a>
-            </td>
-        </tr>
+                <a asp-controller="Guests" asp-action="Add" asp-route-id="@item.Id" class="btn btn-secondary @(item.GuestsReservationsCount >= 4 ? "disabled" : string.Empty)">Добави гост</a>
+</td>
+
+</tr>
 }
     </tbody>
 </table>

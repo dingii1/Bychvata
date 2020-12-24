@@ -9,6 +9,8 @@ namespace Bychvata.Web.ViewModels.Models.ViewModels
 {
     public class AdditionViewModel : IMapFrom<Addition>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         [Display(Name = "Име")]
         public string Name { get; set; }
 

@@ -4,11 +4,12 @@
     using Bychvata.Services.Data;
     using Bychvata.Web.ViewModels;
     using Bychvata.Web.ViewModels.Models.BindingModels;
-    using Bychvata.Web.ViewModels.Models.ViewModels;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class HomeController : BaseController
@@ -22,10 +23,8 @@
             this.additionsService = additionsService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(AvailabilityBindingModel model)
         {
-            var model = new AvailabilityBindingModel();
-
             return this.View(model);
         }
 
@@ -34,31 +33,22 @@
             return this.View();
         }
 
-        public async Task<IActionResult> CheckAvailability(string arrival, string departure)
+        public async Task<IActionResult> CheckAvailability(AvailabilityBindingModel model)
         {
-            var model = new AvailabilityBindingModel
-            {
-                Arrival = Convert.ToDateTime(arrival),
-                Departure = Convert.ToDateTime(departure),
-            };
-
             //Add wheather forecast api for the selected days if there are available
-            //TODO: Repair validations messagges
             if (!ModelState.IsValid)
             {
+                model.ShouldShowAvailabilityDetails = false;
+
                 return this.RedirectToAction("Index", model);
             }
 
             ICollection<Bungalow> bungalows = this.reservationsService.CheckAvailability(model);
 
-            var viewModel = new AvailabilityViewModel()
-            {
-                Arrival = model.Arrival,
-                Departure = model.Departure,
-                IsAvailable = bungalows.Count > 0 ? true : false,
-            };
+            model.ShouldShowAvailabilityDetails = true;
+            model.IsAvailable = bungalows.Count > 0;
 
-            return this.PartialView("_CheckAvailabilityPartial", viewModel);
+            return this.RedirectToAction("Index", model);
         }
 
         public IActionResult Conditions()
@@ -78,6 +68,30 @@
         {
             return this.View(
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+        }
+
+        public override RedirectToActionResult RedirectToAction(string actionName, object routeValues)
+        {
+            var redirectToActionResult = base.RedirectToAction(actionName, routeValues);
+
+            var routeValuesType = routeValues.GetType();
+            foreach (var routeValue in redirectToActionResult.RouteValues)
+            {
+                if (routeValue.Value is DateTime dateValue)
+                {
+                    var propertyInfo = routeValuesType.GetProperty(routeValue.Key);
+                    if (propertyInfo != null)
+                    {
+                        var displayFormatAttribute = propertyInfo.GetCustomAttributes(typeof(DisplayFormatAttribute), true).FirstOrDefault() as DisplayFormatAttribute;
+                        if (displayFormatAttribute != null)
+                        {
+                            redirectToActionResult.RouteValues[routeValue.Key] = string.Format(displayFormatAttribute.DataFormatString, dateValue);
+                        }
+                    }
+                }
+            }
+
+            return redirectToActionResult;
         }
     }
 }

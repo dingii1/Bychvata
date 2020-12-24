@@ -9,7 +9,7 @@ namespace Bychvata.Data.Models
     {
         public Addition()
         {
-            this.Reservations = new HashSet<Reservation>();
+            this.ReservationAdditions = new HashSet<ReservationAdditions>();
         }
 
         [Required]
@@ -19,6 +19,6 @@ namespace Bychvata.Data.Models
 
         public string Notes { get; set; }
 
-        public IEnumerable<Reservation> Reservations { get; set; }
+        public virtual IEnumerable<ReservationAdditions> ReservationAdditions { get; set; }
     }
 }

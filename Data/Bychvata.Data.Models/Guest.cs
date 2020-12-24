@@ -48,6 +48,6 @@ namespace Bychvata.Data.Models
 
         public ApplicationUser ApplicationUser { get; set; }
 
-        public virtual ICollection<GuestReservation> GuestsReservations { get; set; }
+        public virtual IEnumerable<GuestReservation> GuestsReservations { get; set; }
     }
 }

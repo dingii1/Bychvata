@@ -32,10 +32,10 @@ namespace Bychvata.Data.Models
 
         public Guest Guest { get; set; }
 
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+        public virtual IEnumerable<IdentityUserRole<string>> Roles { get; set; }
 
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+        public virtual IEnumerable<IdentityUserClaim<string>> Claims { get; set; }
 
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+        public virtual IEnumerable<IdentityUserLogin<string>> Logins { get; set; }
     }
 }

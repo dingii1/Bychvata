@@ -101,7 +101,8 @@ namespace Bychvata.Services.Data
             return this.reservationsRepository.AllAsNoTracking()
                 .Include(r => r.GuestsReservations)
                 .ThenInclude(gr => gr.Guest)
-                .Include(r => r.Additions)
+                .Include(r => r.ReservationAdditions)
+                .ThenInclude(r => r.Addition)
                 .Where(r => r.Id == id)
                 .To<T>()
                 .FirstOrDefault();
@@ -111,19 +112,19 @@ namespace Bychvata.Services.Data
         {
             Reservation reservation = this.reservationsRepository
                 .All()
-                .Include(r => r.Additions)
+                .Include(r => r.ReservationAdditions)
                 .Where(r => r.Id == reservationId)
                 .FirstOrDefault();
 
             reservation.Notes = model.Notes;
 
-            reservation.Additions.Clear();
+            reservation.ReservationAdditions.ToList().Clear();
 
             foreach (var addition in model.Additions)
             {
                 if (addition.IsIncluded)
                 {
-                    reservation.Additions.Add(new Addition { Id = addition.Id });
+                    reservation.ReservationAdditions.ToList().Add(new ReservationAdditions { AdditionId = addition.Id });
                 }
             }
 

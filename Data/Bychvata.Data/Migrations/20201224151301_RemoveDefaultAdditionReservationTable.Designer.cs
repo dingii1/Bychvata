@@ -4,14 +4,16 @@ using Bychvata.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bychvata.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201224151301_RemoveDefaultAdditionReservationTable")]
+    partial class RemoveDefaultAdditionReservationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -486,42 +488,6 @@ namespace Bychvata.Data.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("Bychvata.Data.Models.ReservationAdditions", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("AdditionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdditionId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ReservationId");
-
-                    b.ToTable("ReservationAdditions");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -716,25 +682,6 @@ namespace Bychvata.Data.Migrations
                     b.Navigation("Bungalow");
                 });
 
-            modelBuilder.Entity("Bychvata.Data.Models.ReservationAdditions", b =>
-                {
-                    b.HasOne("Bychvata.Data.Models.Addition", "Addition")
-                        .WithMany("ReservationAdditions")
-                        .HasForeignKey("AdditionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Bychvata.Data.Models.Reservation", "Reservation")
-                        .WithMany("ReservationAdditions")
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Addition");
-
-                    b.Navigation("Reservation");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Bychvata.Data.Models.ApplicationRole", null)
@@ -786,11 +733,6 @@ namespace Bychvata.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bychvata.Data.Models.Addition", b =>
-                {
-                    b.Navigation("ReservationAdditions");
-                });
-
             modelBuilder.Entity("Bychvata.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Claims");
@@ -820,8 +762,6 @@ namespace Bychvata.Data.Migrations
             modelBuilder.Entity("Bychvata.Data.Models.Reservation", b =>
                 {
                     b.Navigation("GuestsReservations");
-
-                    b.Navigation("ReservationAdditions");
                 });
 #pragma warning restore 612, 618
         }

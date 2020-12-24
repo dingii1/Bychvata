@@ -10,7 +10,7 @@ namespace Bychvata.Data.Models
         public Reservation()
         {
             this.GuestsReservations = new HashSet<GuestReservation>();
-            this.Additions = new HashSet<Addition>();
+            this.ReservationAdditions = new HashSet<ReservationAdditions>();
         }
 
         [Required]
@@ -30,8 +30,8 @@ namespace Bychvata.Data.Models
 
         public Bungalow Bungalow { get; set; }
 
-        public virtual ICollection<GuestReservation> GuestsReservations { get; set; }
+        public virtual IEnumerable<GuestReservation> GuestsReservations { get; set; }
 
-        public virtual ICollection<Addition> Additions { get; set; }
+        public virtual IEnumerable<ReservationAdditions> ReservationAdditions { get; set; }
     }
 }

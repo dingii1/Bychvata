@@ -1,13 +1,9 @@
-﻿using System;
+﻿using Bychvata.Web.ViewModels.Models.BaseModels;
 
 namespace Bychvata.Web.ViewModels.Models.ViewModels
 {
-    public class AvailabilityViewModel
+    public class AvailabilityViewModel : ReservationBaseModel
     {
-        public DateTime From { get; set; }
-
-        public DateTime To { get; set; }
-
         public bool IsAvailable { get; set; }
     }
 }

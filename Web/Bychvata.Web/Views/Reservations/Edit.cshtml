@@ -1,0 +1,99 @@
+﻿@model Bychvata.Web.ViewModels.Models.BindingModels.ReservationEditBindingModel
+
+@{
+    ViewData["Title"] = "Корекция";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Arrival" class="control-label">Пристигане:</label>
+                        <input type="date" asp-for="@Model.Arrival" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Departure" class="control-label">Заминаване:</label>
+                        <input type="date" asp-for="@Model.Departure" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Price" class="control-label">Цена:</label>
+                        <input type="text" asp-for="@Model.Price" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label">Бележки:</label>
+                <textarea asp-for="@Model.Notes" class="form-control"></textarea>
+                <span asp-validation-for="@Model.Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Допълнителни услуги:</label>
+                <ul>
+                    @for (var i = 0; i < Model.Additions.Count; i++)
+                    {
+                        <li>
+                            <input type="checkbox" asp-for="@Model.Additions[i].IsIncluded" />
+                            <label asp-for="@Model.Additions[i].IsIncluded">@Model.Additions[i].Name</label>
+                            <input type="hidden" asp-for="@Model.Additions[i].Id" />
+                            <input type="hidden" asp-for="@Model.Additions[i].Name" />
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2">
+                        <label asp-for="Guests">Гости:</label>
+                    </div>
+                    <div class="col-10">
+                        @if (Model.Guests.Count > 0)
+                        {
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Име</th>
+                                        <th>Фамилия</th>
+                                        <th>Телефон</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var guest in Model.Guests)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>@guest.FirstName</td>
+                                            <td>@guest.LastName</td>
+                                            <td>@guest.TelephoneNumber</td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <span>Все още не сте добавили гости, моля</span>
+                            <a class="btn btn-outline-info" asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id">добави гост</a>
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <a asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-secondary @(Model.Guests.Count >= 4 ? "disabled" : string.Empty)">Добави гост</a> |
+                    <input type="submit" value="Запази" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Обратно</a>
+</div>
+

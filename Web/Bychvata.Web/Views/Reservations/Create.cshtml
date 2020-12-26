@@ -2,45 +2,49 @@
 @model ReservationCreateBindingModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Създаване на резервация";
 }
 
-<h1>Create</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>ReservationCreateBindingModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="BungalowId" class="control-label"></label>
-                <input asp-for="BungalowId" class="form-control" />
-                <span asp-validation-for="BungalowId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Arrival" class="control-label"></label>
-                <input asp-for="Arrival" class="form-control" />
+                <label asp-for="Arrival" class="control-label">Пристигане:</label>
+                <input asp-for="Arrival" type="date" value="@Model.Arrival.ToString("yyyy-MM-dd")" class="form-control" />
                 <span asp-validation-for="Arrival" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Departure" class="control-label"></label>
-                <input asp-for="Departure" class="form-control" />
+                <label asp-for="Departure" class="control-label">Заминаване:</label>
+                <input asp-for="Departure" type="date" value="@Model.Departure.ToString("yyyy-MM-dd")" class="form-control" />
                 <span asp-validation-for="Departure" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
+                <label asp-for="Notes" class="control-label">Бележки:</label>
                 <input asp-for="Notes" class="form-control" />
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label class="control-label">Допълнителни услуги:</label>
+                @for (var i = 0; i < Model.Additions.Count; i++)
+                {
+                    <div>
+                        <input type="checkbox" asp-for="@Model.Additions[i].IsIncluded" />
+                        <label asp-for="@Model.Additions[i].IsIncluded">@Model.Additions[i].Name</label>
+                        <input type="hidden" asp-for="@Model.Additions[i].Id" />
+                        <input type="hidden" asp-for="@Model.Additions[i].Name" />
+                    </div>
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" value="Резервирай" />
             </div>
         </form>
     </div>
+    <div class="col-md-8">
+        <img src="~/20180710_181630.jpg" width="800" height="600">
+    </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

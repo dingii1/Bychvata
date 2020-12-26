@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Bychvata.Data.Models.Addition">
+    <Position X="7.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Reservation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Bychvata.Data.Models.Bungalow">
+    <Position X="12.75" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Bychvata.Data.Models.BungalowReservation">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Reservation" />
+      <Property Name="Bungalow" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Bychvata.Data.Models.Document">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <AssociationLine Name="Guest" Type="Bychvata.Data.Models.Guest" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.75" Y="6.812" />
+        <Point X="1.062" Y="6.812" />
+        <Point X="1.062" Y="4.492" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Guest" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Bychvata.Data.Models.Guest">
+    <Position X="0.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Document" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Bychvata.Data.Models.GuestReservation">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Guest" />
+      <Property Name="Reservation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Bychvata.Data.Models.Reservation">
+    <Position X="7" Y="0.5" Width="2" />
+    <AssociationLine Name="ApplicationUser" Type="Bychvata.Data.Models.ApplicationUser" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="2.25" />
+        <Point X="6.25" Y="2.25" />
+        <Point X="6.25" Y="3" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Bychvata.Data.Models.ApplicationUser">
+    <Position X="4.75" Y="3" Width="1.5" />
+    <AssociationLine Name="Guest" Type="Bychvata.Data.Models.Guest" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.75" Y="4.062" />
+        <Point X="4.505" Y="4.062" />
+        <Point X="4.505" Y="4.125" />
+        <Point X="2.5" Y="4.125" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Guest" />
+    </ShowAsAssociation>
+    <Lollipop Orientation="Left" Position="0.1" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,114 @@
+﻿@model Bychvata.Web.ViewModels.Models.ViewModels.ReservationDetailsViewModel
+
+@{
+    ViewData["Title"] = "Детайли";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            Бунгало номер:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.BungalowNumber)
+        </dd>
+        <dt class="col-sm-3">
+            Бележки:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+        <dt class="col-sm-3">
+            Създадена на:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+        <dt class="col-sm-3">
+            Цена:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ReservationPrice)
+        </dd>
+        <dt class="col-sm-3">
+            Пристигане:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Arrival)
+        </dd>
+        <dt class="col-sm-3">
+            Заминаване:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Departure)
+        </dd>
+        <dt class="col-sm-3">
+            Допълнителни услуги:
+        </dt>
+        <dd class="col-sm-9">
+            @if (Model.Additions.Count > 0)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Вид</th>
+                            <th>Цена</th>
+                        </tr>
+                    </thead>
+                    @foreach (var addition in Model.Additions)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@addition.Name</td>
+                                <td>@addition.Value</td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            }
+            else
+            {
+                <span>Не сте избрали допълнителни услуги</span>
+            }
+        </dd>
+        <dt class="col-sm-3">
+            Добавени гости:
+        </dt>
+        <dd class="col-sm-9">
+            @if (Model.Guests.Count > 0)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Име</th>
+                            <th>Фамилия</th>
+                            <th>Телефон</th>
+                        </tr>
+                    </thead>
+                    @foreach (var guest in Model.Guests)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@guest.FirstName</td>
+                                <td>@guest.LastName</td>
+                                <td>@guest.TelephoneNumber</td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            }
+            else
+            {
+                <span>Все още не сте добавили гости, моля</span>
+                <a class="btn btn-outline-info" asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id">добави гост</a>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Коригирай</a> |
+    <a asp-action="MyReservations">Обратно</a>
+</div>

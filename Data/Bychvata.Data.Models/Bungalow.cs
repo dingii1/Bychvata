@@ -1,16 +1,16 @@
 ﻿using Bychvata.Data.Common.Enums;
+using Bychvata.Data.Common.Models;
 using System.Collections.Generic;
 
 namespace Bychvata.Data.Models
 {
-    public class Bungalow
+    public class Bungalow : BaseDeletableModel<int>
     {
         public Bungalow()
         {
-            this.Prices = new HashSet<Price>();
+            this.Reservations = new HashSet<Reservation>();
+            this.DatesAvailable = new HashSet<DateAvailable>();
         }
-
-        public int Id { get; set; }
 
         public int Number { get; set; }
 
@@ -24,6 +24,8 @@ namespace Bychvata.Data.Models
 
         public string Notes { get; set; }
 
-        public virtual IEnumerable<Price> Prices { get; set; }
+        public virtual IEnumerable<Reservation> Reservations { get; set; }
+
+        public virtual IEnumerable<DateAvailable> DatesAvailable { get; set; }
     }
 }

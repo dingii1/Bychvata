@@ -15,19 +15,16 @@ namespace Bychvata.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("Bychvata.Data.Models.Addition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BungalowId")
-                        .HasColumnType("int");
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -47,19 +44,12 @@ namespace Bychvata.Data.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BungalowId");
-
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ReservationId");
 
                     b.ToTable("Additions");
                 });
@@ -86,12 +76,12 @@ namespace Bychvata.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -99,7 +89,7 @@ namespace Bychvata.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
@@ -124,8 +114,8 @@ namespace Bychvata.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -146,12 +136,12 @@ namespace Bychvata.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -169,8 +159,8 @@ namespace Bychvata.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -179,11 +169,11 @@ namespace Bychvata.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
@@ -194,13 +184,25 @@ namespace Bychvata.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("Beds")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
@@ -216,7 +218,51 @@ namespace Bychvata.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsDeleted");
+
                     b.ToTable("Bungalows");
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.DateAvailable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("BungalowId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PriceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BungalowId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("PriceId");
+
+                    b.ToTable("DatesAvailable");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.Document", b =>
@@ -224,7 +270,7 @@ namespace Bychvata.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -260,7 +306,7 @@ namespace Bychvata.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
@@ -328,7 +374,7 @@ namespace Bychvata.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -364,10 +410,7 @@ namespace Bychvata.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BungalowId")
-                        .HasColumnType("int");
+                        .UseIdentityColumn();
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
@@ -378,11 +421,8 @@ namespace Bychvata.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<double?>("DiscountPercent")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("DiscountPercent")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -390,12 +430,7 @@ namespace Bychvata.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BungalowId");
 
                     b.HasIndex("IsDeleted");
 
@@ -407,7 +442,7 @@ namespace Bychvata.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
@@ -416,7 +451,7 @@ namespace Bychvata.Data.Migrations
                     b.Property<DateTime>("Arrival")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("BungalowId")
+                    b.Property<int?>("BungalowId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -451,12 +486,48 @@ namespace Bychvata.Data.Migrations
                     b.ToTable("Reservations");
                 });
 
+            modelBuilder.Entity("Bychvata.Data.Models.ReservationAdditions", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("AdditionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditionId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ReservationId");
+
+                    b.ToTable("ReservationAdditions");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -480,7 +551,7 @@ namespace Bychvata.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -555,24 +626,32 @@ namespace Bychvata.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Bychvata.Data.Models.Addition", b =>
-                {
-                    b.HasOne("Bychvata.Data.Models.Bungalow", "Bungalow")
-                        .WithMany()
-                        .HasForeignKey("BungalowId");
-
-                    b.HasOne("Bychvata.Data.Models.Reservation", "Reservation")
-                        .WithMany("Additions")
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Bychvata.Data.Models.ApplicationUser", b =>
                 {
                     b.HasOne("Bychvata.Data.Models.Guest", "Guest")
                         .WithMany()
                         .HasForeignKey("GuestId");
+
+                    b.Navigation("Guest");
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.DateAvailable", b =>
+                {
+                    b.HasOne("Bychvata.Data.Models.Bungalow", "Bungalow")
+                        .WithMany("DatesAvailable")
+                        .HasForeignKey("BungalowId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Bychvata.Data.Models.Price", "Price")
+                        .WithMany("DatesAvailable")
+                        .HasForeignKey("PriceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Bungalow");
+
+                    b.Navigation("Price");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.Document", b =>
@@ -582,6 +661,8 @@ namespace Bychvata.Data.Migrations
                         .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Guest");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.Guest", b =>
@@ -593,6 +674,10 @@ namespace Bychvata.Data.Migrations
                     b.HasOne("Bychvata.Data.Models.Document", "Document")
                         .WithMany()
                         .HasForeignKey("DocumentId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.GuestReservation", b =>
@@ -608,15 +693,10 @@ namespace Bychvata.Data.Migrations
                         .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Bychvata.Data.Models.Price", b =>
-                {
-                    b.HasOne("Bychvata.Data.Models.Bungalow", "Bungalow")
-                        .WithMany("Prices")
-                        .HasForeignKey("BungalowId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Guest");
+
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("Bychvata.Data.Models.Reservation", b =>
@@ -628,10 +708,31 @@ namespace Bychvata.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Bychvata.Data.Models.Bungalow", "Bungalow")
-                        .WithMany()
-                        .HasForeignKey("BungalowId")
+                        .WithMany("Reservations")
+                        .HasForeignKey("BungalowId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Bungalow");
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.ReservationAdditions", b =>
+                {
+                    b.HasOne("Bychvata.Data.Models.Addition", "Addition")
+                        .WithMany("ReservationAdditions")
+                        .HasForeignKey("AdditionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Bychvata.Data.Models.Reservation", "Reservation")
+                        .WithMany("ReservationAdditions")
+                        .HasForeignKey("ReservationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Addition");
+
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -683,6 +784,44 @@ namespace Bychvata.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.Addition", b =>
+                {
+                    b.Navigation("ReservationAdditions");
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Claims");
+
+                    b.Navigation("Logins");
+
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.Bungalow", b =>
+                {
+                    b.Navigation("DatesAvailable");
+
+                    b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.Guest", b =>
+                {
+                    b.Navigation("GuestsReservations");
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.Price", b =>
+                {
+                    b.Navigation("DatesAvailable");
+                });
+
+            modelBuilder.Entity("Bychvata.Data.Models.Reservation", b =>
+                {
+                    b.Navigation("GuestsReservations");
+
+                    b.Navigation("ReservationAdditions");
                 });
 #pragma warning restore 612, 618
         }

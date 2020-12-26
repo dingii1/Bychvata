@@ -26,6 +26,8 @@
 
         public DbSet<Bungalow> Bungalows { get; set; }
 
+        public DbSet<DateAvailable> DatesAvailable { get; set; }
+
         public DbSet<Document> Documents { get; set; }
 
         public DbSet<Guest> Guests { get; set; }

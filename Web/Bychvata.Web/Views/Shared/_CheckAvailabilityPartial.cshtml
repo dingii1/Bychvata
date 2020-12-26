@@ -1,0 +1,24 @@
+﻿@using Bychvata.Web.ViewModels.Models.BindingModels
+@model AvailabilityBindingModel
+@{
+    ViewData["Title"] = "Наличност";
+}
+
+@if (Model.IsAvailable)
+{
+    <h3>Има свободни бунгала за посочения от вас период.</h3>
+    <form method="get" asp-controller="Reservations" asp-action="Create">
+        <input asp-for="Arrival" type="hidden" />
+        <input asp-for="Departure" type="hidden" />
+        <input type="submit" class="btn btn-dark" value="Резервирай сега!" />
+    </form>
+}
+else
+{
+    <h3>Няма свободни места за посочения от вас период, моля посочете други дати.</h3>
+}
+
+@section Scripts {
+    @*Call web api for weather forecast*@
+    <script></script>
+}

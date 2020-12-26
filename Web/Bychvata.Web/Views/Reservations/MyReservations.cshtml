@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Bychvata.Web.ViewModels.Models.ViewModels.ReservationViewModel>
+
+@{
+    ViewData["Title"] = "Моите резервации";
+}
+
+<h1>@this.ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Създадена на
+            </th>
+            <th>
+                Цена
+            </th>
+            <th>
+                Пристигане
+            </th>
+            <th>
+                Заминаване
+            </th>
+            <th>
+                Регистрирани гости
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Arrival)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestsReservationsCount)
+            </td>
+            <td>
+                @*@Html.ActionLink("Редактирай", "Edit", new { id = item.Id }) *@
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Коригирай</a> |
+                @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Детайли</a> |
+                @*@Html.ActionLink("Добави гост", "Add", "Guests", new { id = item.Id })*@
+                <a asp-controller="Guests" asp-action="Add" asp-route-id="@item.Id" class="btn btn-secondary @(item.GuestsReservationsCount >= 4 ? "disabled" : string.Empty)">Добави гост</a>
+</td>
+
+</tr>
+}
+    </tbody>
+</table>

@@ -1,22 +1,20 @@
 ﻿namespace Bychvata.Web.Areas.Administration.Controllers
 {
-    using Bychvata.Services.Data;
     using Bychvata.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
     {
-        private readonly ISettingsService settingsService;
+        //private readonly ISettingsService settingsService;
 
-        public DashboardController(ISettingsService settingsService)
+        public DashboardController()
         {
-            this.settingsService = settingsService;
         }
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
+            var viewModel = new IndexViewModel { SettingsCount = 5, };
             return this.View(viewModel);
         }
     }

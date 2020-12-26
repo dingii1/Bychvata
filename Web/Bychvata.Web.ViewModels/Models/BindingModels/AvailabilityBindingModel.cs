@@ -6,15 +6,30 @@ namespace Bychvata.Web.ViewModels.Models.BindingModels
 {
     public class AvailabilityBindingModel : IValidatableObject
     {
-        public DateTime From { get; set; }
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public DateTime Arrival { get; set; } = DateTime.Now;
 
-        public DateTime To { get; set; }
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public DateTime Departure { get; set; } = DateTime.Now.AddDays(1);
+
+        public bool IsAvailable { get; set; }
+
+        public bool ShouldShowAvailabilityDetails { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (From > To)
+            if (this.Arrival.Date < DateTime.Now.Date)
             {
-                yield return new ValidationResult("Датата на пристигане трябва да бъде преди датата на заминаване.");
+                yield return new ValidationResult("Не може да бъде направена резервация за предходна дата.", new List<string>() { this.Arrival.ToString() });
+            }
+
+            if (this.Arrival >= this.Departure)
+            {
+                yield return new ValidationResult("Датата на пристигане трябва да бъде преди датата на заминаване.", new List<string>() { this.Arrival.ToString(), this.Departure.ToString() });
             }
         }
     }

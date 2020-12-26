@@ -1,71 +1,129 @@
-﻿using Bychvata.Web.ViewModels.Models.BindingModels;
+﻿using Bychvata.Common;
+using Bychvata.Data.Models;
+using Bychvata.Services.Data;
+using Bychvata.Services.Messaging;
+using Bychvata.Web.ViewModels.Models.BindingModels;
 using Bychvata.Web.ViewModels.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Bychvata.Web.Controllers
 {
+    [Authorize]
     public class ReservationsController : Controller
     {
-        // GET: ReservationsController
-        public ActionResult Index()
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IReservationsService reservationsService;
+        private readonly IAdditionsService additionsService;
+        private readonly IEmailSender emailSender;
+
+        public ReservationsController(UserManager<ApplicationUser> userManager, IReservationsService reservationsService, IAdditionsService additionsService, IEmailSender emailSender)
         {
-            return View();
+            this.userManager = userManager;
+            this.reservationsService = reservationsService;
+            this.additionsService = additionsService;
+            this.emailSender = emailSender;
         }
 
         // GET: ReservationsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            ReservationDetailsViewModel model = this.reservationsService.GetById<ReservationDetailsViewModel>(id);
+
+            return this.View(model);
         }
 
         // GET: ReservationsController/Create
-        public ActionResult Create(AvailabilityViewModel model)
+        public ActionResult Create(AvailabilityBindingModel model)
         {
-            return this.View(model);
+            ReservationCreateBindingModel input = new ReservationCreateBindingModel
+            {
+                Arrival = model.Arrival,
+                Departure = model.Departure,
+                Additions = this.additionsService.GetAdditionsBindingModel().ToList(),
+            };
+
+            return this.View(input);
         }
 
         // POST: ReservationsController/Create
         [HttpPost]
-        public ActionResult Create(ReservationCreateBindingModel model)
+        public async Task<ActionResult> Create(ReservationCreateBindingModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View();
             }
 
-            return this.Redirect("/Home/Index");
+            string userIdClaimValue = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userEmailClaimValue = this.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            var result = await this.reservationsService.CreateReservation(model, userIdClaimValue);
+
+            if (result >= 0)
+            {
+                await this.emailSender.SendEmailAsync(GlobalConstants.SendEmailFrom, GlobalConstants.SystemName, userEmailClaimValue, "Успешна резервация", EmailTemplates.ConfirmReservationTemplate());
+
+                return this.RedirectToAction("Success");
+            }
+            else
+            {
+                return this.RedirectToAction("Failed");
+            }
         }
 
-        public IActionResult MyReservations()
+        public IActionResult Success()
         {
             return this.View();
         }
 
-        // GET: ReservationsController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Failed()
         {
-            return View();
+            return this.View();
+        }
+
+        public IActionResult MyReservations()
+        {
+            string userIdClaimValue = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ICollection<ReservationViewModel> reservations = this.reservationsService.GetReservations(userIdClaimValue);
+
+            return this.View(reservations);
+        }
+
+        // GET: ReservationsController/Edit/5
+        public IActionResult Edit(int id)
+        {
+            ReservationEditBindingModel model = this.reservationsService.GetById<ReservationEditBindingModel>(id);
+
+            model.Additions = this.additionsService.GetAdditionsBindingModel().ToList();
+
+            return this.View(model);
         }
 
         // POST: ReservationsController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, ReservationCreateBindingModel model)
+        public async Task<IActionResult> Edit(int id, ReservationEditBindingModel model)
         {
-            try
+            if (!this.ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return this.View(model);
             }
-            catch
-            {
-                return View();
-            }
+
+            await this.reservationsService.UpdateAsync(id, model);
+
+            return this.RedirectToAction(nameof(this.MyReservations));
         }
 
         // GET: ReservationsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return this.View();
         }
 
         // POST: ReservationsController/Delete/5
@@ -74,11 +132,11 @@ namespace Bychvata.Web.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(this.MyReservations));
             }
             catch
             {
-                return View();
+                return this.View();
             }
         }
     }

@@ -10,18 +10,13 @@ namespace Bychvata.Data.Models
         public Reservation()
         {
             this.GuestsReservations = new HashSet<GuestReservation>();
-
-            this.Additions = new HashSet<Addition>();
+            this.ReservationAdditions = new HashSet<ReservationAdditions>();
         }
 
         [Required]
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
-
-        public int BungalowId { get; set; }
-
-        public Bungalow Bungalow { get; set; }
 
         public DateTime Arrival { get; set; }
 
@@ -31,8 +26,12 @@ namespace Bychvata.Data.Models
 
         public decimal ReservationPrice { get; set; }
 
+        public int? BungalowId { get; set; }
+
+        public Bungalow Bungalow { get; set; }
+
         public virtual IEnumerable<GuestReservation> GuestsReservations { get; set; }
 
-        public virtual IEnumerable<Addition> Additions { get; set; }
+        public virtual IEnumerable<ReservationAdditions> ReservationAdditions { get; set; }
     }
 }

@@ -6,6 +6,7 @@
     using Bychvata.Data.Models;
     using Bychvata.Data.Repositories;
     using Bychvata.Data.Seeding;
+    using Bychvata.Services.Data;
     using Bychvata.Services.Mapping;
     using Bychvata.Services.Messaging;
     using Bychvata.Web.ViewModels;
@@ -61,8 +62,12 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
-            //services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
+            services.AddTransient<IReservationsService, ReservationsService>();
+            services.AddTransient<IBungalowsService, BungalowsService>();
+            services.AddTransient<IGuestsService, GuestsService>();
+            services.AddTransient<IDocumentsService, DocumentsService>();
+            services.AddTransient<IAdditionsService, AdditionsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

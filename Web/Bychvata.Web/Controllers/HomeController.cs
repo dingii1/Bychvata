@@ -1,16 +1,31 @@
 ﻿namespace Bychvata.Web.Controllers
 {
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Data;
     using Bychvata.Web.ViewModels;
     using Bychvata.Web.ViewModels.Models.BindingModels;
-    using Bychvata.Web.ViewModels.Models.ViewModels;
     using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly IReservationsService reservationsService;
+        private readonly IAdditionsService additionsService;
+
+        public HomeController(IReservationsService reservationsService, IAdditionsService additionsService)
         {
-            return this.View();
+            this.reservationsService = reservationsService;
+            this.additionsService = additionsService;
+        }
+
+        public IActionResult Index(AvailabilityBindingModel model)
+        {
+            return this.View(model);
         }
 
         public IActionResult Privacy()
@@ -18,24 +33,34 @@
             return this.View();
         }
 
-        [HttpPost]
-        public IActionResult CheckAvailability(AvailabilityBindingModel model)
+        public async Task<IActionResult> CheckAvailability(AvailabilityBindingModel model)
         {
-            //Use AvailabilityService returns true or false
-            //Add wheather forecast api for the selected days if there are available and OpenStreetMap with location
+            //Add wheather forecast api for the selected days if there are available
             if (!ModelState.IsValid)
             {
-                return this.RedirectToAction("Index");
+                model.ShouldShowAvailabilityDetails = false;
+
+                return this.RedirectToAction("Index", model);
             }
 
-            var viewModel = new AvailabilityViewModel()
-            {
-                From = model.From,
-                To = model.To,
-                IsAvailable = true,
-            };
+            ICollection<Bungalow> bungalows = this.reservationsService.CheckAvailability(model);
 
-            return this.View(viewModel);
+            model.ShouldShowAvailabilityDetails = true;
+            model.IsAvailable = bungalows.Count > 0;
+
+            return this.RedirectToAction("Index", model);
+        }
+
+        public IActionResult Conditions()
+        {
+            return this.View();
+        }
+
+        public IActionResult Prices()
+        {
+            var model = this.additionsService.GetAll();
+
+            return this.View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -43,6 +68,30 @@
         {
             return this.View(
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+        }
+
+        public override RedirectToActionResult RedirectToAction(string actionName, object routeValues)
+        {
+            var redirectToActionResult = base.RedirectToAction(actionName, routeValues);
+
+            var routeValuesType = routeValues.GetType();
+            foreach (var routeValue in redirectToActionResult.RouteValues)
+            {
+                if (routeValue.Value is DateTime dateValue)
+                {
+                    var propertyInfo = routeValuesType.GetProperty(routeValue.Key);
+                    if (propertyInfo != null)
+                    {
+                        var displayFormatAttribute = propertyInfo.GetCustomAttributes(typeof(DisplayFormatAttribute), true).FirstOrDefault() as DisplayFormatAttribute;
+                        if (displayFormatAttribute != null)
+                        {
+                            redirectToActionResult.RouteValues[routeValue.Key] = string.Format(displayFormatAttribute.DataFormatString, dateValue);
+                        }
+                    }
+                }
+            }
+
+            return redirectToActionResult;
         }
     }
 }

@@ -1,20 +1,22 @@
 ﻿using Bychvata.Data.Common.Models;
-using System;
+using System.Collections.Generic;
 
 namespace Bychvata.Data.Models
 {
     public class Price : BaseDeletableModel<int>
     {
-        public DateTime From { get; set; }
+        public Price()
+        {
+            this.DiscountPercent = 0;
+            this.DatesAvailable = new HashSet<DateAvailable>();
+        }
 
-        public DateTime To { get; set; }
-
-        public double? DiscountPercent { get; set; }
+        public decimal DiscountPercent { get; set; }
 
         public decimal Cost { get; set; }
 
-        public int BungalowId { get; set; }
+        public decimal TotalPrice => this.Cost - (this.DiscountPercent / 100 * this.Cost);
 
-        public Bungalow Bungalow { get; set; }
+        public IEnumerable<DateAvailable> DatesAvailable { get; set; }
     }
 }

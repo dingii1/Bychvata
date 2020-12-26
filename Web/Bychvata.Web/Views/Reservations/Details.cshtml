@@ -86,7 +86,6 @@
                             <th>Име</th>
                             <th>Фамилия</th>
                             <th>Телефон</th>
-                            <th>ЕГН</th>
                         </tr>
                     </thead>
                     @foreach (var guest in Model.Guests)
@@ -96,7 +95,6 @@
                                 <td>@guest.FirstName</td>
                                 <td>@guest.LastName</td>
                                 <td>@guest.TelephoneNumber</td>
-                                <td>@guest.PersonalIdentificationNumber</td>
                             </tr>
                         </tbody>
                     }
@@ -111,7 +109,6 @@
     </dl>
 </div>
 <div>
-    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })*@
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Коригирай</a> |
     <a asp-action="MyReservations">Обратно</a>
 </div>

@@ -113,6 +113,7 @@ namespace Bychvata.Services.Data
             Reservation reservation = this.reservationsRepository
                 .All()
                 .Include(r => r.ReservationAdditions)
+                .ThenInclude(ra => ra.Addition)
                 .Where(r => r.Id == reservationId)
                 .FirstOrDefault();
 
@@ -124,7 +125,7 @@ namespace Bychvata.Services.Data
             {
                 if (addition.IsIncluded)
                 {
-                    reservation.ReservationAdditions.ToList().Add(new ReservationAdditions { AdditionId = addition.Id });
+                    reservation.ReservationAdditions.ToList().Add(new ReservationAdditions { AdditionId = addition.Id, ReservationId = reservation.Id });
                 }
             }
 

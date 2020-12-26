@@ -1,10 +1,13 @@
-﻿using Bychvata.Web.ViewModels.Models.ViewModels;
+﻿using Bychvata.Web.ViewModels.Models.BindingModels;
+using Bychvata.Web.ViewModels.Models.ViewModels;
 using System.Collections.Generic;
 
 namespace Bychvata.Services.Data
 {
     public interface IAdditionsService
     {
-        ICollection<AdditionViewModel> GetAll();
+        IEnumerable<AdditionViewModel> GetAll();
+
+        IEnumerable<AdditionBindingModel> GetAdditionsBindingModel();
     }
 }

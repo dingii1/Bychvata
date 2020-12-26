@@ -10,17 +10,17 @@ namespace Bychvata.Web.ViewModels.Models.ViewModels
     {
         public ReservationDetailsViewModel()
         {
-            this.Guests = new HashSet<Guest>();
-            this.Additions = new HashSet<Addition>();
+            this.Guests = new HashSet<GuestViewModel>();
+            this.Additions = new HashSet<AdditionViewModel>();
         }
 
         public int? BungalowNumber { get; set; }
 
         public string Notes { get; set; }
 
-        public ICollection<Guest> Guests { get; set; }
+        public ICollection<GuestViewModel> Guests { get; set; }
 
-        public ICollection<Addition> Additions { get; set; }
+        public ICollection<AdditionViewModel> Additions { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

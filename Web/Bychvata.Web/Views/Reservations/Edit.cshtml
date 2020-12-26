@@ -56,31 +56,37 @@
                         <label asp-for="Guests">Гости:</label>
                     </div>
                     <div class="col-10">
-                        <table class="table table-info table-striped">
-                            <tr>
-                                <th>Име</th>
-                                <th>Фамилия</th>
-                                <th>Телефон</th>
-                                <th></th>
-                            </tr>
-                            @foreach (var guest in Model.Guests)
-                            {
-                                <tr>
-                                    <td>@guest.FirstName</td>
-                                    <td>@guest.LastName</td>
-                                    <td>@guest.TelephoneNumber</td>
-                                    <td>
-                                        <a asp-controller="Guests" asp-action="Edit" asp-route-id="@guest.Id" class="btn btn-primary">Коригирай</a> |
-                                        <a asp-controller="Guests" asp-action="Details" asp-route-id="@guest.Id" class="btn btn-info">Детайли</a> |
-                                        <a asp-controller="Guests" asp-action="Delete" asp-route-id="@guest.Id" class="btn btn-danger">Изтрий</a>
-                                    </td>
-                                </tr>
-                            }
-                        </table>
+                        @if (Model.Guests.Count > 0)
+                        {
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Име</th>
+                                        <th>Фамилия</th>
+                                        <th>Телефон</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var guest in Model.Guests)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>@guest.FirstName</td>
+                                            <td>@guest.LastName</td>
+                                            <td>@guest.TelephoneNumber</td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <span>Все още не сте добавили гости, моля</span>
+                            <a class="btn btn-outline-info" asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id">добави гост</a>
+                        }
                     </div>
                 </div>
                 <div class="form-group">
-                    <a asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-secondary">Добави гост</a> |
+                    <a asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-secondary @(Model.Guests.Count >= 4 ? "disabled" : string.Empty)">Добави гост</a> |
                     <input type="submit" value="Запази" class="btn btn-primary" />
                 </div>
             </div>

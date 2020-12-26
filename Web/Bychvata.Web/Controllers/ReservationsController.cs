@@ -42,9 +42,14 @@ namespace Bychvata.Web.Controllers
         // GET: ReservationsController/Create
         public ActionResult Create(AvailabilityBindingModel model)
         {
-            this.ViewData["Arrival"] = model.Arrival.Date.ToString("yyyy-MM-dd");
-            this.ViewData["Departure"] = model.Departure.Date.ToString("yyyy-MM-dd");
-            return this.View();
+            ReservationCreateBindingModel input = new ReservationCreateBindingModel
+            {
+                Arrival = model.Arrival,
+                Departure = model.Departure,
+                Additions = this.additionsService.GetAdditionsBindingModel().ToList(),
+            };
+
+            return this.View(input);
         }
 
         // POST: ReservationsController/Create
@@ -96,14 +101,7 @@ namespace Bychvata.Web.Controllers
         {
             ReservationEditBindingModel model = this.reservationsService.GetById<ReservationEditBindingModel>(id);
 
-            model.Additions = this.additionsService.GetAll()
-                .Select(addition => new AdditionBindingModel
-                {
-                    Id = addition.Id,
-                    Name = addition.Name,
-                    IsIncluded = model.Additions.Any(reservetionAddition => reservetionAddition.Id == addition.Id),
-                })
-                .ToList();
+            model.Additions = this.additionsService.GetAdditionsBindingModel().ToList();
 
             return this.View(model);
         }

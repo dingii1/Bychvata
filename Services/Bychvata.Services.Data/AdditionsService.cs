@@ -1,6 +1,7 @@
 ﻿using Bychvata.Data.Common.Repositories;
 using Bychvata.Data.Models;
 using Bychvata.Services.Mapping;
+using Bychvata.Web.ViewModels.Models.BindingModels;
 using Bychvata.Web.ViewModels.Models.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,17 @@ namespace Bychvata.Services.Data
             this.additionsRepository = additionsRepository;
         }
 
-        public ICollection<AdditionViewModel> GetAll()
+        public IEnumerable<AdditionViewModel> GetAll()
         {
             return this.additionsRepository.All()
                 .To<AdditionViewModel>()
+                .ToList();
+        }
+
+        public IEnumerable<AdditionBindingModel> GetAdditionsBindingModel()
+        {
+            return this.additionsRepository.All()
+                .To<AdditionBindingModel>()
                 .ToList();
         }
     }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Bychvata.Web.ViewModels.Models.BindingModels
 {
-    public class ReservationCreateBindingModel : ReservationBaseModel, IMapTo<Reservation>
+    public class ReservationCreateBindingModel : ReservationBaseModel, IMapFrom<Reservation>
     {
         public ReservationCreateBindingModel()
         {

@@ -7,6 +7,8 @@ namespace Bychvata.Web.ViewModels.Models.ViewModels
 {
     public class BungalowViewModel : IMapFrom<Bungalow>
     {
+        public int Id { get; set; }
+
         [Display(Name = "Номер")]
         public int Number { get; set; }
 

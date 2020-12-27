@@ -22,5 +22,12 @@ namespace Bychvata.Services.Data
                 .To<BungalowViewModel>()
                 .ToList();
         }
+
+        public BungalowDetailViewModel GetById(int id)
+        {
+            return this.bungalowsRepository.All()
+                .To<BungalowDetailViewModel>()
+                .FirstOrDefault();
+        }
     }
 }

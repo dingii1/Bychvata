@@ -16,19 +16,18 @@ namespace Bychvata.Web.Controllers
             this.bungalowsService = bungalowsService;
         }
 
-        // GET: BungalowsController
         public ActionResult Index()
         {
-            // bungalowService to get all bungalows and pass to the view as model
             ICollection<BungalowViewModel> bungalows = this.bungalowsService.GetAll();
 
             return this.View(bungalows);
         }
 
-        // GET: BungalowsController/Details/5
         public ActionResult Details(int id)
         {
-            return this.View();
+            BungalowDetailViewModel model = this.bungalowsService.GetById(id);
+
+            return this.View(model);
         }
     }
 }

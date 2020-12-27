@@ -38,17 +38,15 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Допълнителни услуги:</label>
-                <ul>
                     @for (var i = 0; i < Model.Additions.Count; i++)
                     {
-                        <li>
+                        <div>
                             <input type="checkbox" asp-for="@Model.Additions[i].IsIncluded" />
                             <label asp-for="@Model.Additions[i].IsIncluded">@Model.Additions[i].Name</label>
                             <input type="hidden" asp-for="@Model.Additions[i].Id" />
                             <input type="hidden" asp-for="@Model.Additions[i].Name" />
-                        </li>
+                        </div>
                     }
-                </ul>
             </div>
             <div class="form-group">
                 <div class="row">
@@ -64,6 +62,7 @@
                                         <th>Име</th>
                                         <th>Фамилия</th>
                                         <th>Телефон</th>
+                                        <th>Документ</th>
                                     </tr>
                                 </thead>
                                 @foreach (var guest in Model.Guests)
@@ -73,6 +72,18 @@
                                             <td>@guest.FirstName</td>
                                             <td>@guest.LastName</td>
                                             <td>@guest.TelephoneNumber</td>
+                                            @if (guest.HasDocument)
+                                            {
+                                                <td>
+                                                    <a method="get" asp-controller="Documents" asp-action="Edit" asp-route-id="@guest.DocumentId">Коригирай</a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <a asp-controller="Documents" asp-action="Add" asp-route-id="@guest.DocumentId">Добави</a>
+                                                </td>
+                                            }
                                         </tr>
                                     </tbody>
                                 }
@@ -87,7 +98,7 @@
                 </div>
                 <div class="form-group">
                     <a asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-secondary @(Model.Guests.Count >= 4 ? "disabled" : string.Empty)">Добави гост</a> |
-                    <input type="submit" value="Запази" class="btn btn-primary" />
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit">Запази</button>
                 </div>
             </div>
         </form>
@@ -97,3 +108,25 @@
     <a asp-action="Index">Обратно</a>
 </div>
 
+<!-- Modal -->
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Do you confirm this changes?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="editForm.submit()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

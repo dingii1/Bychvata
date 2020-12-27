@@ -1,6 +1,7 @@
 ﻿using Bychvata.Data.Models;
 using Bychvata.Services.Data;
 using Bychvata.Web.ViewModels.Models.BindingModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Bychvata.Web.Controllers
 {
-    public class GuestsController : Controller
+    [Authorize]
+    public class GuestsController : BaseController
     {
         private readonly IGuestsService guestsService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -78,7 +80,7 @@ namespace Bychvata.Web.Controllers
         {
             try
             {
-                return this.RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(this.Index));
             }
             catch
             {
@@ -99,7 +101,7 @@ namespace Bychvata.Web.Controllers
         {
             try
             {
-                return this.RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(this.Index));
             }
             catch
             {

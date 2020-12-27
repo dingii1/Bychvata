@@ -1,0 +1,49 @@
+﻿@using System
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Bychvata.Data.Common.Enums
+@model Bychvata.Web.ViewModels.Models.BindingModels.DocumentBindingModel
+
+@{
+    ViewData["Title"] = "Добави документ";
+    var typeItems = new List<SelectListItem>();
+    foreach (var dt in Enum.GetValues(typeof(DocumentType)))
+    {
+        SelectListItem item = new SelectListItem(Enum.GetName(typeof(DocumentType), dt), dt.ToString());
+        typeItems.Add(item);
+    }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label">Тип:</label>
+                <select asp-for="Type" asp-items="typeItems" class="form-control"></select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label">Номер:</label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueDate" class="control-label">Издаден на:</label>
+                <input type="date" asp-for="IssueDate" class="form-control" />
+                <span asp-validation-for="IssueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpireDate" class="control-label">Валиден до:</label>
+                <input type="date" asp-for="ExpireDate" class="form-control" />
+                <span asp-validation-for="ExpireDate" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="GuestId" class="form-control" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@using System
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Bychvata.Data.Common.Enums
+@model Bychvata.Web.ViewModels.Models.BindingModels.DocumentEditBindingModel
+
+@{
+    ViewData["Title"] = "Коригирай";
+    var typeItems = new List<SelectListItem>();
+    foreach (var dt in Enum.GetValues(typeof(DocumentType)))
+    {
+        SelectListItem item = new SelectListItem(Enum.GetName(typeof(DocumentType), dt), dt.ToString());
+        typeItems.Add(item);
+    }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" id="editForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label">Тип:</label>
+                <select asp-for="Type" asp-items="typeItems" class="form-control"></select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label">Номер:</label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueDate" class="control-label">Издаден на:</label>
+                <input type="date" asp-for="IssueDate" class="form-control" />
+                <span asp-validation-for="IssueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpireDate" class="control-label">Валиден до:</label>
+                <input type="date" asp-for="ExpireDate" class="form-control" />
+                <span asp-validation-for="ExpireDate" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="GuestId" class="form-control" />
+            <input type="hidden" asp-for="Id" class="form-control" />
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit">Запази</button>
+            </div>
+        </form>
+        <form method="post" asp-action="Delete" id="deleteForm" asp-route-id="@Model.Id">
+            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Изтрий</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Потвърждавате ли тези промени?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+                <button type="button" class="btn btn-primary" onclick="editForm.submit()">Запази</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Сигурни ли сте, че искате да изтриете този документ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Да</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+            </div>
+        </div>
+    </div>
+</div>

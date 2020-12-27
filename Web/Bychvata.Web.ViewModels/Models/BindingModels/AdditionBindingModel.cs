@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using Bychvata.Data.Common.Enums;
+using Bychvata.Common.Extensions;
 using Bychvata.Data.Models;
 using Bychvata.Services.Mapping;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Bychvata.Web.ViewModels.Models.BindingModels
 {
@@ -10,7 +11,7 @@ namespace Bychvata.Web.ViewModels.Models.BindingModels
     {
         public int Id { get; set; }
 
-        public AdditionType Name { get; set; }
+        public string Name { get; set; }
 
         public bool IsIncluded { get; set; }
 
@@ -18,7 +19,9 @@ namespace Bychvata.Web.ViewModels.Models.BindingModels
         {
             configuration.CreateMap<Addition, AdditionBindingModel>()
                 .ForMember(x => x.IsIncluded, opt =>
-                    opt.MapFrom(a => a.ReservationAdditions.Any(reservationAddition => reservationAddition.Id == a.Id)));
+                    opt.MapFrom(a => a.ReservationAdditions.Any(reservationAddition => reservationAddition.Id == a.Id)))
+                .ForMember(x => x.Name, opt =>
+                    opt.MapFrom(x => x.Name.GetName<EnumMemberAttribute>()));
         }
     }
 }

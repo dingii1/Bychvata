@@ -6,8 +6,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bychvata.Web.ViewModels.Models.BindingModels
 {
-    public class DocumentBindingModel : IMapFrom<Document>
+    public class DocumentEditBindingModel : IMapFrom<Document>
     {
+        public int Id { get; set; }
+
         [Required]
         public DocumentType Type { get; set; }
 

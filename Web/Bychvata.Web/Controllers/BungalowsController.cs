@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Bychvata.Web.Controllers
 {
     [Authorize]
-    public class BungalowsController : Controller
+    public class BungalowsController : BaseController
     {
         private readonly IBungalowsService bungalowsService;
 

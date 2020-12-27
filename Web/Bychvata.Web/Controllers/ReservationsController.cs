@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace Bychvata.Web.Controllers
 {
     [Authorize]
-    public class ReservationsController : Controller
+    public class ReservationsController : BaseController
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IReservationsService reservationsService;

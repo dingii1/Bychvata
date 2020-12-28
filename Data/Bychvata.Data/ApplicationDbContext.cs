@@ -84,6 +84,9 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            builder.Entity<ReservationAdditions>()
+                .HasKey(ra => new { ra.AdditionId, ra.ReservationId });
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

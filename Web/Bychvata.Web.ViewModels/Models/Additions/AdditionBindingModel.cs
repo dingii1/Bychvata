@@ -21,7 +21,7 @@
         {
             configuration.CreateMap<Addition, AdditionBindingModel>()
                 .ForMember(x => x.IsIncluded, opt =>
-                    opt.MapFrom(a => a.ReservationAdditions.Any(reservationAddition => reservationAddition.Id == a.Id)))
+                    opt.MapFrom(a => a.ReservationAdditions.Any(reservationAddition => reservationAddition.AdditionId == a.Id)))
                 .ForMember(x => x.Name, opt =>
                     opt.MapFrom(a => a.Name.GetName<EnumMemberAttribute>()))
                 .ForMember(x => x.Price, opt =>

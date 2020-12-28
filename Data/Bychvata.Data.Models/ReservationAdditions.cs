@@ -1,8 +1,6 @@
-﻿using Bychvata.Data.Common.Models;
-
-namespace Bychvata.Data.Models
+﻿namespace Bychvata.Data.Models
 {
-    public class ReservationAdditions : BaseDeletableModel<int>
+    public class ReservationAdditions
     {
         public int ReservationId { get; set; }
 

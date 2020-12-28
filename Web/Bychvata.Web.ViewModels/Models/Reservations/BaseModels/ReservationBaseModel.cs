@@ -16,14 +16,14 @@
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (this.Arrival < DateTime.Now)
+            if (this.Arrival < DateTime.Today)
             {
-                yield return new ValidationResult("Не може да бъде направена резервация за предходна дата.", new List<string>() { Arrival.ToString() });
+                yield return new ValidationResult("Не може да бъде направена резервация за предходна дата.", new List<string>() { nameof(Arrival) });
             }
 
             if (this.Arrival > this.Departure)
             {
-                yield return new ValidationResult("Датата на пристигане трябва да бъде преди датата на заминаване.", new List<string>() { Arrival.ToString(), Departure.ToString() });
+                yield return new ValidationResult("Датата на пристигане трябва да бъде преди датата на заминаване.", new List<string>() { nameof(Arrival), nameof(Departure) });
             }
         }
     }

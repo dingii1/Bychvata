@@ -28,7 +28,9 @@
         {
             configuration.CreateMap<Reservation, ReservationDetailsViewModel>()
                 .ForMember(x => x.Guests, opt =>
-                    opt.MapFrom(x => x.GuestsReservations.Where(y => y.ReservationId == x.Id).Select(z => z.Guest)));
+                    opt.MapFrom(x => x.GuestsReservations.Where(y => y.ReservationId == x.Id).Select(z => z.Guest)))
+                .ForMember(rdvm => rdvm.Additions, opt =>
+                    opt.MapFrom(r => r.ReservationAdditions.Select(ra => ra.Addition)));
         }
     }
 }

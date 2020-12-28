@@ -81,7 +81,6 @@
             bungalow.Notes = model.Notes;
             bungalow.Beds = model.Beds;
 
-            await this.bungalowsRepository.AddAsync(bungalow);
             await this.bungalowsRepository.SaveChangesAsync();
         }
     }

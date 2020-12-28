@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-12">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="editForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="col-4">
@@ -43,9 +43,12 @@
                 {
                     <div>
                         <input type="checkbox" asp-for="@Model.Additions[i].IsIncluded" />
-                        <label asp-for="@Model.Additions[i].IsIncluded">@Model.Additions[i].Name</label>
+                        <label asp-for="@Model.Additions[i].IsIncluded">
+                            @Model.Additions[i].Name - @Model.Additions[i].Price лв.
+                        </label>
                         <input type="hidden" asp-for="@Model.Additions[i].Id" />
                         <input type="hidden" asp-for="@Model.Additions[i].Name" />
+                        <input type="hidden" asp-for="@Model.Additions[i].Price" />
                     </div>
                 }
             </div>

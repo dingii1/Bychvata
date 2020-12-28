@@ -15,12 +15,14 @@ namespace Bychvata.Services.Data
         private readonly IDeletableEntityRepository<Bungalow> bungalowsRepository;
         private readonly IDeletableEntityRepository<Reservation> reservationsRepository;
         private readonly IDeletableEntityRepository<Guest> guestsRepository;
+        private readonly IDeletableEntityRepository<Addition> additionRepository;
 
-        public ReservationsService(IDeletableEntityRepository<Bungalow> bungalowsRepository, IDeletableEntityRepository<Reservation> reservationsRepository, IDeletableEntityRepository<Guest> guestsRepository)
+        public ReservationsService(IDeletableEntityRepository<Bungalow> bungalowsRepository, IDeletableEntityRepository<Reservation> reservationsRepository, IDeletableEntityRepository<Guest> guestsRepository, IDeletableEntityRepository<Addition> additionRepository)
         {
             this.bungalowsRepository = bungalowsRepository;
             this.reservationsRepository = reservationsRepository;
             this.guestsRepository = guestsRepository;
+            this.additionRepository = additionRepository;
         }
 
         public ICollection<Bungalow> CheckAvailability(AvailabilityBindingModel model)
@@ -91,6 +93,8 @@ namespace Bychvata.Services.Data
             {
                 if (addition.IsIncluded)
                 {
+                    reservation.ReservationAdditions.Add(new ReservationAdditions { AdditionId = addition.Id });
+
                     reservation.ReservationPrice += addition.Price;
                 }
             }
@@ -126,17 +130,27 @@ namespace Bychvata.Services.Data
 
             reservation.Notes = model.Notes;
 
-            reservation.ReservationAdditions.ToList().Clear();
+            foreach (var reservationAddition in reservation.ReservationAdditions)
+            {
+                reservation.ReservationPrice -= reservationAddition.Addition.Value;
+            }
+
+            reservation.ReservationAdditions.Clear();
 
             foreach (var addition in model.Additions)
             {
                 if (addition.IsIncluded)
                 {
-                    reservation.ReservationAdditions.Append(new ReservationAdditions
+                    reservation.ReservationAdditions.Add(new ReservationAdditions
                     {
                         AdditionId = addition.Id,
                         ReservationId = reservation.Id,
                     });
+
+                    reservation.ReservationPrice += this.additionRepository.All()
+                        .Where(a => a.Id == addition.Id)
+                        .Select(a => a.Value)
+                        .FirstOrDefault();
                 }
             }
 

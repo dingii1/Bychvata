@@ -2,7 +2,6 @@
 using Bychvata.Data.Models;
 using Bychvata.Services.Mapping;
 using Bychvata.Web.ViewModels.Models.Additions;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,11 +23,9 @@ namespace Bychvata.Services.Data
                 .ToList();
         }
 
-        public IEnumerable<AdditionBindingModel> GetAdditionsBindingModel()
+        public IList<AdditionBindingModel> GetAdditionBindingModels()
         {
             return this.additionsRepository.All()
-                .Include(a => a.ReservationAdditions)
-                .ThenInclude(ra => ra.Reservation)
                 .To<AdditionBindingModel>()
                 .ToList();
         }

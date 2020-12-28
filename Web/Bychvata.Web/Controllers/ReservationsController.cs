@@ -44,7 +44,7 @@ namespace Bychvata.Web.Controllers
             {
                 Arrival = model.Arrival,
                 Departure = model.Departure,
-                Additions = this.additionsService.GetAdditionsBindingModel().ToList(),
+                Additions = this.additionsService.GetAdditionBindingModels(),
             };
 
             return this.View(input);
@@ -99,7 +99,13 @@ namespace Bychvata.Web.Controllers
         {
             ReservationEditBindingModel model = this.reservationsService.GetById<ReservationEditBindingModel>(id);
 
-            model.Additions = this.additionsService.GetAdditionsBindingModel().ToList();
+            var allAdditions = this.additionsService.GetAdditionBindingModels();
+            foreach (var addition in allAdditions)
+            {
+                addition.IsIncluded = model.Additions.Any(a => a.Id == addition.Id);
+            }
+
+            model.Additions = allAdditions;
 
             return this.View(model);
         }

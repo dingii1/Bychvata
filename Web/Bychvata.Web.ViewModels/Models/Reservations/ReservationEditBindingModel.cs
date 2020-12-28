@@ -36,7 +36,9 @@
                 .ForMember(x => x.Guests, opt =>
                     opt.MapFrom(r => r.GuestsReservations.Where(gr => gr.ReservationId == r.Id).Select(x => x.Guest)))
                 .ForMember(x => x.Price, opt =>
-                    opt.MapFrom(r => r.ReservationPrice));
+                    opt.MapFrom(r => r.ReservationPrice))
+                .ForMember(x => x.Additions, opt =>
+                    opt.MapFrom(r => r.ReservationAdditions.Select(re => re.Addition)));
         }
     }
 }

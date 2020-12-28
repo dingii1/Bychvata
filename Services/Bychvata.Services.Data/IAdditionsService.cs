@@ -7,6 +7,6 @@ namespace Bychvata.Services.Data
     {
         IEnumerable<AdditionViewModel> GetAll();
 
-        IEnumerable<AdditionBindingModel> GetAdditionsBindingModel();
+        IList<AdditionBindingModel> GetAdditionBindingModels();
     }
 }

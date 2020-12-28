@@ -1,8 +1,8 @@
 ﻿using Bychvata.Data.Common.Repositories;
 using Bychvata.Data.Models;
 using Bychvata.Services.Mapping;
-using Bychvata.Web.ViewModels.Models.BindingModels;
-using Bychvata.Web.ViewModels.Models.ViewModels;
+using Bychvata.Web.ViewModels.Models.Additions;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +27,8 @@ namespace Bychvata.Services.Data
         public IEnumerable<AdditionBindingModel> GetAdditionsBindingModel()
         {
             return this.additionsRepository.All()
+                .Include(a => a.ReservationAdditions)
+                .ThenInclude(ra => ra.Reservation)
                 .To<AdditionBindingModel>()
                 .ToList();
         }

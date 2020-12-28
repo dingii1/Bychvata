@@ -1,4 +1,4 @@
-﻿@using Bychvata.Web.ViewModels.Models.BindingModels
+﻿@using Bychvata.Web.ViewModels.Models.Reservations
 @model ReservationCreateBindingModel
 
 @{
@@ -29,13 +29,14 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Допълнителни услуги:</label>
-                @for (var i = 0; i < Model.Additions.Count; i++)
+                @foreach(var addition in @Model.Additions)
                 {
                     <div>
-                        <input type="checkbox" asp-for="@Model.Additions[i].IsIncluded" />
-                        <label asp-for="@Model.Additions[i].IsIncluded">@Model.Additions[i].Name</label>
-                        <input type="hidden" asp-for="@Model.Additions[i].Id" />
-                        <input type="hidden" asp-for="@Model.Additions[i].Name" />
+                        <input type="checkbox" asp-for="@addition.IsIncluded" />
+                        <label asp-for="@addition.IsIncluded">@addition.Name</label>
+                        <input type="hidden" asp-for="@addition.Id" />
+                        <input type="hidden" asp-for="@addition.Name" />
+                        <input type="hidden" asp-for="@addition.Price" />
                     </div>
                 }
             </div>
@@ -45,6 +46,6 @@
         </form>
     </div>
     <div class="col-md-8">
-        <img src="~/20180710_181630.jpg" width="800" height="600">
+        <img src="~/20180710_181630.jpg" style="width:100%" height="600">
     </div>
 </div>

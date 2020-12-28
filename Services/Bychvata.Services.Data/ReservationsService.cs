@@ -1,8 +1,7 @@
 ﻿using Bychvata.Data.Common.Repositories;
 using Bychvata.Data.Models;
 using Bychvata.Services.Mapping;
-using Bychvata.Web.ViewModels.Models.BindingModels;
-using Bychvata.Web.ViewModels.Models.ViewModels;
+using Bychvata.Web.ViewModels.Models.Reservations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -88,6 +87,14 @@ namespace Bychvata.Services.Data
                 }
             }
 
+            foreach (var addition in model.Additions)
+            {
+                if (addition.IsIncluded)
+                {
+                    reservation.ReservationPrice += addition.Price;
+                }
+            }
+
             await this.bungalowsRepository.SaveChangesAsync();
 
             await this.reservationsRepository.AddAsync(reservation);
@@ -102,7 +109,7 @@ namespace Bychvata.Services.Data
                 .Include(r => r.GuestsReservations)
                 .ThenInclude(gr => gr.Guest)
                 .Include(r => r.ReservationAdditions)
-                .ThenInclude(r => r.Addition)
+                .ThenInclude(ra => ra.Addition)
                 .Where(r => r.Id == id)
                 .To<T>()
                 .FirstOrDefault();
@@ -125,7 +132,11 @@ namespace Bychvata.Services.Data
             {
                 if (addition.IsIncluded)
                 {
-                    reservation.ReservationAdditions.ToList().Add(new ReservationAdditions { AdditionId = addition.Id, ReservationId = reservation.Id });
+                    reservation.ReservationAdditions.Append(new ReservationAdditions
+                    {
+                        AdditionId = addition.Id,
+                        ReservationId = reservation.Id,
+                    });
                 }
             }
 

@@ -1,10 +1,10 @@
-﻿using Bychvata.Data.Common.Enums;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using System;
-
-namespace Bychvata.Web.ViewModels.Models.BindingModels
+﻿namespace Bychvata.Web.ViewModels.Models.Guests
 {
+    using Bychvata.Data.Common.Enums;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using System;
+
     public class GuestAddBindingModel : IMapTo<Guest>
     {
         public int ReservationId { get; set; }

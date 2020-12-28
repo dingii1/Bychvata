@@ -1,5 +1,5 @@
 ﻿using Bychvata.Data.Models;
-using Bychvata.Web.ViewModels.Models.BindingModels;
+using Bychvata.Web.ViewModels.Models.Guests;
 using System.Threading.Tasks;
 
 namespace Bychvata.Services.Data

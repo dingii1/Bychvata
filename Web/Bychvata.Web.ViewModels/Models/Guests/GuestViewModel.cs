@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-
-namespace Bychvata.Web.ViewModels.Models.ViewModels
+﻿namespace Bychvata.Web.ViewModels.Models.Guests
 {
+    using AutoMapper;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+
     public class GuestViewModel : IMapFrom<Guest>, IHaveCustomMappings
     {
         public int Id { get; set; }

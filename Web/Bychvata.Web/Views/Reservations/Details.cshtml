@@ -1,4 +1,5 @@
-﻿@model Bychvata.Web.ViewModels.Models.ViewModels.ReservationDetailsViewModel
+﻿@using Bychvata.Web.ViewModels.Models.Reservations
+@model ReservationDetailsViewModel
 
 @{
     ViewData["Title"] = "Детайли";
@@ -51,7 +52,7 @@
         <dd class="col-sm-9">
             @if (Model.Additions.Count > 0)
             {
-                <table class="table table-striped">
+                <table class="table table-striped bg-info">
                     <thead>
                         <tr>
                             <th>Вид</th>

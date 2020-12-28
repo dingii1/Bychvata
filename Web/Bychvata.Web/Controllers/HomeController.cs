@@ -3,7 +3,7 @@
     using Bychvata.Data.Models;
     using Bychvata.Services.Data;
     using Bychvata.Web.ViewModels;
-    using Bychvata.Web.ViewModels.Models.BindingModels;
+    using Bychvata.Web.ViewModels.Models.Reservations;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;

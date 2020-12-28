@@ -1,5 +1,5 @@
 ﻿using Bychvata.Services.Data;
-using Bychvata.Web.ViewModels.Models.BindingModels;
+using Bychvata.Web.ViewModels.Models.Documents;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

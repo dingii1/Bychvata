@@ -1,10 +1,10 @@
-﻿using Bychvata.Data.Common.Enums;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using System.ComponentModel.DataAnnotations;
-
-namespace Bychvata.Web.ViewModels.Models.ViewModels
+﻿namespace Bychvata.Web.ViewModels.Models.Bungalows
 {
+    using Bychvata.Data.Common.Enums;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using System.ComponentModel.DataAnnotations;
+
     public class BungalowViewModel : IMapFrom<Bungalow>
     {
         public int Id { get; set; }

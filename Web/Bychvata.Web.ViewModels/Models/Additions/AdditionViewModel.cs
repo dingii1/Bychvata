@@ -1,12 +1,12 @@
-﻿using AutoMapper;
-using Bychvata.Common.Extensions;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-
-namespace Bychvata.Web.ViewModels.Models.ViewModels
+﻿namespace Bychvata.Web.ViewModels.Models.Additions
 {
+    using AutoMapper;
+    using Bychvata.Common.Extensions;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using System.ComponentModel.DataAnnotations;
+    using System.Runtime.Serialization;
+
     public class AdditionViewModel : IMapFrom<Addition>, IHaveCustomMappings
     {
         public int Id { get; set; }

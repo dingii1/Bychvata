@@ -2,10 +2,8 @@
 using Bychvata.Data.Models;
 using Bychvata.Services.Data;
 using Bychvata.Services.Messaging;
-using Bychvata.Web.ViewModels.Models.BindingModels;
-using Bychvata.Web.ViewModels.Models.ViewModels;
+using Bychvata.Web.ViewModels.Models.Reservations;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -58,7 +56,7 @@ namespace Bychvata.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(model);
             }
 
             string userIdClaimValue = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -120,15 +118,8 @@ namespace Bychvata.Web.Controllers
             return this.RedirectToAction(nameof(this.MyReservations));
         }
 
-        // GET: ReservationsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return this.View();
-        }
-
-        // POST: ReservationsController/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {

@@ -1,6 +1,5 @@
 ﻿using Bychvata.Data.Models;
-using Bychvata.Web.ViewModels.Models.BindingModels;
-using Bychvata.Web.ViewModels.Models.ViewModels;
+using Bychvata.Web.ViewModels.Models.Reservations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

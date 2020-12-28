@@ -1,6 +1,6 @@
 ﻿using Bychvata.Data.Common.Repositories;
 using Bychvata.Data.Models;
-using Bychvata.Web.ViewModels.Models.BindingModels;
+using Bychvata.Web.ViewModels.Models.Guests;
 using System;
 using System.Threading.Tasks;
 

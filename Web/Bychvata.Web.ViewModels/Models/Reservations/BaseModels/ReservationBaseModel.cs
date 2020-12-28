@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace Bychvata.Web.ViewModels.Models.BaseModels
+﻿namespace Bychvata.Web.ViewModels.Models.Reservations.BaseModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     public class ReservationBaseModel : IValidatableObject
     {
         [Required]
@@ -18,12 +18,12 @@ namespace Bychvata.Web.ViewModels.Models.BaseModels
         {
             if (this.Arrival < DateTime.Now)
             {
-                yield return new ValidationResult("Не може да бъде направена резервация за предходна дата.", new List<string>() { this.Arrival.ToString() });
+                yield return new ValidationResult("Не може да бъде направена резервация за предходна дата.", new List<string>() { Arrival.ToString() });
             }
 
             if (this.Arrival > this.Departure)
             {
-                yield return new ValidationResult("Датата на пристигане трябва да бъде преди датата на заминаване.", new List<string>() { this.Arrival.ToString(), this.Departure.ToString() });
+                yield return new ValidationResult("Датата на пристигане трябва да бъде преди датата на заминаване.", new List<string>() { Arrival.ToString(), Departure.ToString() });
             }
         }
     }

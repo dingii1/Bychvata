@@ -1,11 +1,11 @@
-﻿using Bychvata.Services.Data;
-using Bychvata.Web.ViewModels.Models.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-
-namespace Bychvata.Web.Controllers
+﻿namespace Bychvata.Web.Controllers
 {
+    using Bychvata.Services.Data;
+    using Bychvata.Web.ViewModels.Models.Bungalows;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+
     [Authorize]
     public class BungalowsController : BaseController
     {
@@ -25,7 +25,7 @@ namespace Bychvata.Web.Controllers
 
         public ActionResult Details(int id)
         {
-            BungalowDetailViewModel model = this.bungalowsService.GetById(id);
+            BungalowDetailViewModel model = this.bungalowsService.GetById<BungalowDetailViewModel>(id);
 
             return this.View(model);
         }

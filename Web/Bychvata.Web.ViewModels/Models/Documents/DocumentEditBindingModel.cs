@@ -1,11 +1,11 @@
-﻿using Bychvata.Data.Common.Enums;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Bychvata.Web.ViewModels.Models.BindingModels
+﻿namespace Bychvata.Web.ViewModels.Models.Documents
 {
+    using Bychvata.Data.Common.Enums;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class DocumentEditBindingModel : IMapFrom<Document>
     {
         public int Id { get; set; }

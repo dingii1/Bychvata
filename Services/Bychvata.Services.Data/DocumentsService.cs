@@ -1,7 +1,7 @@
 ﻿using Bychvata.Data.Common.Repositories;
 using Bychvata.Data.Models;
 using Bychvata.Services.Mapping;
-using Bychvata.Web.ViewModels.Models.BindingModels;
+using Bychvata.Web.ViewModels.Models.Documents;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

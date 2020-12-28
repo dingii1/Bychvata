@@ -1,6 +1,6 @@
 ﻿using Bychvata.Data.Models;
 using Bychvata.Services.Data;
-using Bychvata.Web.ViewModels.Models.BindingModels;
+using Bychvata.Web.ViewModels.Models.Guests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

@@ -1,13 +1,14 @@
-﻿using AutoMapper;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using Bychvata.Web.ViewModels.Models.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Bychvata.Web.ViewModels.Models.BindingModels
+﻿namespace Bychvata.Web.ViewModels.Models.Reservations
 {
+    using AutoMapper;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using Bychvata.Web.ViewModels.Models.Additions;
+    using Bychvata.Web.ViewModels.Models.Guests;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class ReservationEditBindingModel : IMapTo<Reservation>, IMapFrom<Reservation>, IHaveCustomMappings
     {
         public ReservationEditBindingModel()

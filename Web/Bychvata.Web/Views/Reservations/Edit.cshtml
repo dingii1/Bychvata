@@ -1,4 +1,5 @@
-﻿@model Bychvata.Web.ViewModels.Models.BindingModels.ReservationEditBindingModel
+﻿@using Bychvata.Web.ViewModels.Models.Reservations
+@model ReservationEditBindingModel
 
 @{
     ViewData["Title"] = "Корекция";
@@ -38,15 +39,15 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Допълнителни услуги:</label>
-                    @for (var i = 0; i < Model.Additions.Count; i++)
-                    {
-                        <div>
-                            <input type="checkbox" asp-for="@Model.Additions[i].IsIncluded" />
-                            <label asp-for="@Model.Additions[i].IsIncluded">@Model.Additions[i].Name</label>
-                            <input type="hidden" asp-for="@Model.Additions[i].Id" />
-                            <input type="hidden" asp-for="@Model.Additions[i].Name" />
-                        </div>
-                    }
+                @for (var i = 0; i < Model.Additions.Count; i++)
+                {
+                    <div>
+                        <input type="checkbox" asp-for="@Model.Additions[i].IsIncluded" />
+                        <label asp-for="@Model.Additions[i].IsIncluded">@Model.Additions[i].Name</label>
+                        <input type="hidden" asp-for="@Model.Additions[i].Id" />
+                        <input type="hidden" asp-for="@Model.Additions[i].Name" />
+                    </div>
+                }
             </div>
             <div class="form-group">
                 <div class="row">
@@ -98,14 +99,14 @@
                 </div>
                 <div class="form-group">
                     <a asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-secondary @(Model.Guests.Count >= 4 ? "disabled" : string.Empty)">Добави гост</a> |
-                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit">Запази</button>
                 </div>
             </div>
         </form>
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit">Запази</button>
     </div>
 </div>
 <div>
-    <a asp-action="Index">Обратно</a>
+    <a asp-action="MyReservations">Обратно</a>
 </div>
 
 <!-- Modal -->

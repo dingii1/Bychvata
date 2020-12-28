@@ -1,4 +1,4 @@
-﻿using Bychvata.Web.ViewModels.Models.BindingModels;
+﻿using Bychvata.Web.ViewModels.Models.Documents;
 using System.Threading.Tasks;
 
 namespace Bychvata.Services.Data

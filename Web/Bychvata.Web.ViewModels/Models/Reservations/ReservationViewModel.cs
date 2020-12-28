@@ -1,10 +1,10 @@
-﻿using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using Bychvata.Web.ViewModels.Models.BaseModels;
-using System;
-
-namespace Bychvata.Web.ViewModels.Models.ViewModels
+﻿namespace Bychvata.Web.ViewModels.Models.Reservations
 {
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using Bychvata.Web.ViewModels.Models.Reservations.BaseModels;
+    using System;
+
     public class ReservationViewModel : ReservationBaseModel, IMapFrom<Reservation>
     {
         public int Id { get; set; }

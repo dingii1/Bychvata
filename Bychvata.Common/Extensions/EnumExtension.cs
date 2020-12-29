@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Bychvata.Common.Extensions
+﻿namespace Bychvata.Common.Extensions
 {
+    using System;
+
     public static class EnumExtension
     {
         public static string GetName<T>(this Enum enumVal)

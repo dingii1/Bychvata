@@ -1,22 +1,19 @@
-﻿using Bychvata.Data.Common.Repositories;
-using Bychvata.Data.Models;
-using Bychvata.Web.ViewModels.Models.Guests;
-using System;
-using System.Threading.Tasks;
-
-namespace Bychvata.Services.Data
+﻿namespace Bychvata.Services.Data
 {
+    using Bychvata.Data.Common.Repositories;
+    using Bychvata.Data.Models;
+    using Bychvata.Web.ViewModels.Models.Guests;
+    using System.Threading.Tasks;
+
     public class GuestsService : IGuestsService
     {
         private readonly IDeletableEntityRepository<Guest> guestsRepository;
         private readonly IDeletableEntityRepository<GuestReservation> guestsReservationsRepository;
-        private readonly IDocumentsService documentsService;
 
-        public GuestsService(IDeletableEntityRepository<Guest> guestsRepository, IDeletableEntityRepository<GuestReservation> guestsReservationsRepository, IDocumentsService documentsService)
+        public GuestsService(IDeletableEntityRepository<Guest> guestsRepository, IDeletableEntityRepository<GuestReservation> guestsReservationsRepository)
         {
             this.guestsRepository = guestsRepository;
             this.guestsReservationsRepository = guestsReservationsRepository;
-            this.documentsService = documentsService;
         }
 
         public async Task Add(GuestAddBindingModel model, ApplicationUser user)
@@ -45,11 +42,6 @@ namespace Bychvata.Services.Data
             });
 
             await this.guestsReservationsRepository.SaveChangesAsync();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

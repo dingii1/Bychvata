@@ -1,8 +1,8 @@
-﻿using Bychvata.Web.ViewModels.Models.Additions;
-using System.Collections.Generic;
-
-namespace Bychvata.Services.Data
+﻿namespace Bychvata.Services.Data
 {
+    using Bychvata.Web.ViewModels.Models.Additions;
+    using System.Collections.Generic;
+
     public interface IAdditionsService
     {
         IEnumerable<AdditionViewModel> GetAll();

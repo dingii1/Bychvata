@@ -1,10 +1,10 @@
-﻿using Bychvata.Web.ViewModels.Administration.Bungalows;
-using Bychvata.Web.ViewModels.Models.Bungalows;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Bychvata.Services.Data
+﻿namespace Bychvata.Services.Data
 {
+    using Bychvata.Web.ViewModels.Administration.Bungalows;
+    using Bychvata.Web.ViewModels.Models.Bungalows;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IBungalowsService
     {
         ICollection<BungalowViewModel> GetAll();

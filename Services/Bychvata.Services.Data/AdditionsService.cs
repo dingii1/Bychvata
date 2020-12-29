@@ -1,12 +1,12 @@
-﻿using Bychvata.Data.Common.Repositories;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using Bychvata.Web.ViewModels.Models.Additions;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Bychvata.Services.Data
+﻿namespace Bychvata.Services.Data
 {
+    using Bychvata.Data.Common.Repositories;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using Bychvata.Web.ViewModels.Models.Additions;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class AdditionsService : IAdditionsService
     {
         private readonly IDeletableEntityRepository<Addition> additionsRepository;

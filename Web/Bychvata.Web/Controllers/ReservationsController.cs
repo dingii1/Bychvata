@@ -1,18 +1,18 @@
-﻿using Bychvata.Common;
-using Bychvata.Data.Models;
-using Bychvata.Services.Data;
-using Bychvata.Services.Messaging;
-using Bychvata.Web.ViewModels.Models.Reservations;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace Bychvata.Web.Controllers
+﻿namespace Bychvata.Web.Controllers
 {
+    using Bychvata.Common;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Data;
+    using Bychvata.Services.Messaging;
+    using Bychvata.Web.ViewModels.Models.Reservations;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     [Authorize]
     public class ReservationsController : BaseController
     {
@@ -29,7 +29,6 @@ namespace Bychvata.Web.Controllers
             this.emailSender = emailSender;
         }
 
-        // GET: ReservationsController/Details/5
         public ActionResult Details(int id)
         {
             ReservationDetailsViewModel model = this.reservationsService.GetById<ReservationDetailsViewModel>(id);
@@ -37,7 +36,6 @@ namespace Bychvata.Web.Controllers
             return this.View(model);
         }
 
-        // GET: ReservationsController/Create
         public ActionResult Create(AvailabilityBindingModel model)
         {
             ReservationCreateBindingModel input = new ReservationCreateBindingModel
@@ -50,7 +48,6 @@ namespace Bychvata.Web.Controllers
             return this.View(input);
         }
 
-        // POST: ReservationsController/Create
         [HttpPost]
         public async Task<ActionResult> Create(ReservationCreateBindingModel model)
         {
@@ -94,7 +91,6 @@ namespace Bychvata.Web.Controllers
             return this.View(reservations);
         }
 
-        // GET: ReservationsController/Edit/5
         public IActionResult Edit(int id)
         {
             ReservationEditBindingModel model = this.reservationsService.GetById<ReservationEditBindingModel>(id);
@@ -110,7 +106,6 @@ namespace Bychvata.Web.Controllers
             return this.View(model);
         }
 
-        // POST: ReservationsController/Edit/5
         [HttpPost]
         public async Task<IActionResult> Edit(int id, ReservationEditBindingModel model)
         {
@@ -122,19 +117,6 @@ namespace Bychvata.Web.Controllers
             await this.reservationsService.UpdateAsync(id, model);
 
             return this.RedirectToAction(nameof(this.MyReservations));
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                return this.RedirectToAction(nameof(this.MyReservations));
-            }
-            catch
-            {
-                return this.View();
-            }
         }
     }
 }

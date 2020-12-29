@@ -1,15 +1,14 @@
-﻿using Bychvata.Data.Models;
-using Bychvata.Services.Data;
-using Bychvata.Web.ViewModels.Models.Guests;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-
-namespace Bychvata.Web.Controllers
+﻿namespace Bychvata.Web.Controllers
 {
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Data;
+    using Bychvata.Web.ViewModels.Models.Guests;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Threading.Tasks;
+
     [Authorize]
     public class GuestsController : BaseController
     {
@@ -22,19 +21,6 @@ namespace Bychvata.Web.Controllers
             this.userManager = userManager;
         }
 
-        // GET: GuestsController
-        public ActionResult Index()
-        {
-            return this.View();
-        }
-
-        // GET: GuestsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return this.View();
-        }
-
-        // GET: GuestsController/Add
         public ActionResult Add(int id)
         {
             var model = new GuestAddBindingModel();
@@ -43,7 +29,6 @@ namespace Bychvata.Web.Controllers
             return this.View(model);
         }
 
-        // POST: GuestsController/Add
         [HttpPost]
         public async Task<ActionResult> Add(GuestAddBindingModel model)
         {
@@ -65,48 +50,6 @@ namespace Bychvata.Web.Controllers
             }
 
             return this.RedirectToAction("Details", "Reservations", model.ReservationId);
-        }
-
-        // GET: GuestsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return this.View();
-        }
-
-        // POST: GuestsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return this.RedirectToAction(nameof(this.Index));
-            }
-            catch
-            {
-                return this.View();
-            }
-        }
-
-        // GET: GuestsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return this.View();
-        }
-
-        // POST: GuestsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return this.RedirectToAction(nameof(this.Index));
-            }
-            catch
-            {
-                return this.View();
-            }
         }
     }
 }

@@ -61,7 +61,7 @@
                         @if (Model.Guests.Count > 0)
                         {
                             <table class="table table-striped">
-                                <thead>
+                                <thead class="bg-info">
                                     <tr>
                                         <th>Име</th>
                                         <th>Фамилия</th>
@@ -85,7 +85,7 @@
                                             else
                                             {
                                                 <td>
-                                                    <a asp-controller="Documents" asp-action="Add" asp-route-id="@guest.DocumentId">Добави</a>
+                                                    <a asp-controller="Documents" asp-action="Add" asp-route-id="@guest.Id">Добави</a>
                                                 </td>
                                             }
                                         </tr>
@@ -101,14 +101,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <a asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-secondary @(Model.Guests.Count >= 4 ? "disabled" : string.Empty)">Добави гост</a> |
+                    <a asp-controller="Guests" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-secondary @(Model.Guests.Count >= 4 ? "disabled" : string.Empty)">Добави гост</a>
                 </div>
             </div>
         </form>
         <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit">Запази</button>
     </div>
 </div>
-<div>
+<div class="mt-2">
     <a asp-action="MyReservations">Обратно</a>
 </div>
 
@@ -117,19 +117,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Confirm edit</h5>
+                <h5 class="modal-title">Потвърждение</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p>
-                    Do you confirm this changes?
+                    Потвърждавате ли промените?
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="editForm.submit()">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+                <button type="button" class="btn btn-primary" onclick="editForm.submit()">Запази</button>
             </div>
         </div>
     </div>

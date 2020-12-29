@@ -1,14 +1,14 @@
-﻿using Bychvata.Data.Common.Repositories;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using Bychvata.Web.ViewModels.Models.Documents;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Bychvata.Services.Data
+﻿namespace Bychvata.Services.Data
 {
+    using Bychvata.Data.Common.Repositories;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using Bychvata.Web.ViewModels.Models.Documents;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class DocumentsService : IDocumentsService
     {
         private readonly IRepository<Document> documentRepository;
@@ -48,17 +48,16 @@ namespace Bychvata.Services.Data
         public async Task DeleteAsync(int id)
         {
             Document document = this.documentRepository.All()
+                .Include(d => d.Guest)
                 .FirstOrDefault(d => d.Id == id);
 
             if (document == null)
             {
                 throw new ArgumentNullException("There is no document with this id.");
             }
-            else
-            {
-                this.documentRepository.Delete(document);
-                await this.documentRepository.SaveChangesAsync();
-            }
+
+            this.documentRepository.Delete(document);
+            await this.documentRepository.SaveChangesAsync();
         }
 
         public DocumentEditBindingModel Get(int id)
@@ -80,15 +79,13 @@ namespace Bychvata.Services.Data
             {
                 throw new ArgumentNullException("There is no document with this id.");
             }
-            else
-            {
-                document.Type = model.Type;
-                document.Number = model.Number;
-                document.IssueDate = model.IssueDate;
-                document.ExpireDate = model.ExpireDate;
 
-                await this.guestRepository.SaveChangesAsync();
-            }
+            document.Type = model.Type;
+            document.Number = model.Number;
+            document.IssueDate = model.IssueDate;
+            document.ExpireDate = model.ExpireDate;
+
+            await this.guestRepository.SaveChangesAsync();
         }
     }
 }

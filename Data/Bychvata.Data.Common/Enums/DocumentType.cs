@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
-
-namespace Bychvata.Data.Common.Enums
+﻿namespace Bychvata.Data.Common.Enums
 {
+    using System.Runtime.Serialization;
+
     public enum DocumentType
     {
         [EnumMember(Value = "Лична карта")]

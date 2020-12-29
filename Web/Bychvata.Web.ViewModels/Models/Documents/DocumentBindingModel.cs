@@ -11,11 +11,12 @@
         [Required]
         public DocumentType Type { get; set; }
 
+        [Required]
         public string Number { get; set; }
 
-        public DateTime? IssueDate { get; set; }
+        public DateTime IssueDate { get; set; } = DateTime.Today;
 
-        public DateTime? ExpireDate { get; set; }
+        public DateTime ExpireDate { get; set; } = DateTime.Today;
 
         public int GuestId { get; set; }
     }

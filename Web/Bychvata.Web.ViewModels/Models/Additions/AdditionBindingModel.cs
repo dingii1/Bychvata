@@ -4,7 +4,6 @@
     using Bychvata.Common.Extensions;
     using Bychvata.Data.Models;
     using Bychvata.Services.Mapping;
-    using System.Linq;
     using System.Runtime.Serialization;
 
     public class AdditionBindingModel : IMapFrom<Addition>, IHaveCustomMappings

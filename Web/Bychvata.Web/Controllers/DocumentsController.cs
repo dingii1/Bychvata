@@ -1,12 +1,12 @@
-﻿using Bychvata.Services.Data;
-using Bychvata.Web.ViewModels.Models.Documents;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-
-namespace Bychvata.Web.Controllers
+﻿namespace Bychvata.Web.Controllers
 {
+    using Bychvata.Services.Data;
+    using Bychvata.Web.ViewModels.Models.Documents;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Threading.Tasks;
+
     [Authorize]
     public class DocumentsController : BaseController
     {

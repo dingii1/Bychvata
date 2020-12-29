@@ -4,19 +4,25 @@
     using Bychvata.Data.Models;
     using Bychvata.Services.Mapping;
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class GuestAddBindingModel : IMapTo<Guest>
     {
         public int ReservationId { get; set; }
 
+        [Required]
         public string Nationality { get; set; }
 
+        [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string MiddleName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
+        [Required]
         public string PersonalIdentificationNumber { get; set; }
 
         public string TelephoneNumber { get; set; }

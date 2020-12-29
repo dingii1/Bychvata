@@ -1,15 +1,15 @@
-﻿using Bychvata.Data.Common.Repositories;
-using Bychvata.Data.Models;
-using Bychvata.Services.Mapping;
-using Bychvata.Web.ViewModels.Models.Reservations;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Bychvata.Services.Data
+﻿namespace Bychvata.Services.Data
 {
+    using Bychvata.Data.Common.Repositories;
+    using Bychvata.Data.Models;
+    using Bychvata.Services.Mapping;
+    using Bychvata.Web.ViewModels.Models.Reservations;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class ReservationsService : IReservationsService
     {
         private readonly IDeletableEntityRepository<Bungalow> bungalowsRepository;

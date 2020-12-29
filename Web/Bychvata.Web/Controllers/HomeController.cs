@@ -36,7 +36,7 @@
         public async Task<IActionResult> CheckAvailability(AvailabilityBindingModel model)
         {
             //Add wheather forecast api for the selected days if there are available
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 model.ShouldShowAvailabilityDetails = false;
 
